@@ -12,5 +12,7 @@ namespace PrintApp.Data
         }
 
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Printer> Printers { get; set; }
+        public DbSet<Material> Materials { get; set; }
     }
 }
