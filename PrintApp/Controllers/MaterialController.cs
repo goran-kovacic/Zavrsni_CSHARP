@@ -6,7 +6,7 @@ namespace PrintApp.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class MaterialController
+    public class MaterialController:ControllerBase
     {
         private readonly PrintAppContext _context;
 
