@@ -10,6 +10,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(opcije =>
+{
+    opcije.AddPolicy("CorsPolicy",
+        builder =>
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+        );
+});
+
 builder.Services.AddDbContext<PrintAppContext>(o =>
 {
     o.UseSqlServer(builder.Configuration.GetConnectionString("PrintAppContext"));
@@ -29,6 +37,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("CorsPolicy");
 
 app.UseStaticFiles();
 app.UseDefaultFiles();
