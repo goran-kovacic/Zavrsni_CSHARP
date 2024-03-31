@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import ProjectService from '../../services/ProjectService';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { RouteNames} from '../../constants'
 
 export default function Projects() {
 
@@ -21,9 +23,24 @@ export default function Projects() {
         GetProjects();
     }, []);
 
+    async function obrisiAsync(id){
+        const odgovor = await ProjectService.del(id);
+        if(odgovor.greska){
+            console.log(odgovor.poruka);
+            alert('pogledaj konzolu');
+            return;
+        }
+        GetProjects();
+    }
+
+    function obrisi(id) {
+        obrisiAsync(id);
+    }
+    
     return (
         <>
             <Container>
+                <Link to={RouteNames.PROJECT_NEW}>Add</Link>
                 <Table striped bordered hover responsive>
                     <thead>
                         <tr>
@@ -35,6 +52,7 @@ export default function Projects() {
                             <th>Print Time</th>
                             <th>Cost</th>
                             <th>Description</th>
+                            <th>Akcija</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,10 +70,15 @@ export default function Projects() {
                                 <td>{project.totalPrintTime}</td>
                                 <td>{project.totalCost}</td>
                                 <td>{project.projectDescription}</td>
-                                
+                                <td>
+                                    <Button 
+                                    onClick={()=>obrisi(project.id)}
+                                    variant='danger'
+                                    >
+                                        Delete
+                                    </Button>
+                                </td>
                             </tr>
-
-
                         ))}
                     </tbody>
                 </Table>

@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom'
 import { RouteNames } from './constants'
 import Pocetna from './pages/pocetna'
 import Projects from './pages/projects/projects'
+import ProjectsAdd from './pages/projects/projectsAdd'
 
 function App() {
   
@@ -17,6 +18,8 @@ function App() {
       <Routes>
         <Route path={RouteNames.HOME} element={<Pocetna />} />
         <Route path={RouteNames.PROJECT_VIEW} element={<Projects />} />
+        <Route path={RouteNames.PROJECT_NEW} element={<ProjectsAdd />} />
+        
       </Routes>
     </>
   )
