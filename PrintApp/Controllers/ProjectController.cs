@@ -21,6 +21,13 @@ namespace PrintApp.Controllers
             return new JsonResult(_context.Projects.ToList());
         }
 
+        [HttpGet]
+        [Route("{id:int}")]
+        public IActionResult GetById(int id)
+        {
+            return new JsonResult(_context.Projects.Find(id));
+        }
+
         [HttpPost]
         public IActionResult Post(Project project) 
         {
