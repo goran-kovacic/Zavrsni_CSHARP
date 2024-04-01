@@ -9,6 +9,7 @@ import { RouteNames } from './constants'
 import Pocetna from './pages/pocetna'
 import Projects from './pages/projects/projects'
 import ProjectsAdd from './pages/projects/projectsAdd'
+import ProjectsEdit from './pages/projects/projectsEdit'
 
 function App() {
   
@@ -19,7 +20,7 @@ function App() {
         <Route path={RouteNames.HOME} element={<Pocetna />} />
         <Route path={RouteNames.PROJECT_VIEW} element={<Projects />} />
         <Route path={RouteNames.PROJECT_NEW} element={<ProjectsAdd />} />
-        
+        <Route path={RouteNames.PROJECT_EDIT} element={<ProjectsEdit />} />
       </Routes>
     </>
   )

@@ -26,6 +26,18 @@ async function post(project){
     })
 }
 
+async function put(id, project){
+    return await HttpService.put(naziv + '/' + id, project)
+    .then((odgovor=>{
+        //console.table(odgovor.data);
+        return {greska: false, poruka: odgovor.data};
+    }))
+    .catch((e)=>{
+        //console.log(e);
+        return {greska: true, poruka: e};
+    })
+}
+
 async function del(id){
     return await HttpService.delete(naziv + '/' + id)
     .then((odgovor=>{
@@ -38,8 +50,20 @@ async function del(id){
     })
 }
 
+async function getById(id){
+    return await HttpService.get(naziv + '/' + id)
+    .then((o)=>{
+        return {greska: false, poruka: o.data}
+    })
+    .catch((e)=>{
+        return{greska:true, poruka: e}
+    });
+}
+
 export default{
     get,
     post,
-    del
+    del,
+    getById,
+    put
 }

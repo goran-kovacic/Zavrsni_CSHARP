@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import ProjectService from '../../services/ProjectService';
 import { Button, Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RouteNames} from '../../constants'
 
 export default function Projects() {
 
     const [projects, setProjects] = useState();
+    const navigate = useNavigate();
 
     async function GetProjects() {
         await ProjectService.get()
@@ -76,6 +77,11 @@ export default function Projects() {
                                     variant='danger'
                                     >
                                         Delete
+                                    </Button>
+                                    <Button 
+                                    onClick={()=>{navigate(`/projects/${project.id}`)}}                                                                        
+                                    >
+                                        Edit
                                     </Button>
                                 </td>
                             </tr>
