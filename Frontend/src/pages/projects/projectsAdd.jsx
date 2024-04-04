@@ -45,7 +45,8 @@ export default function ProjectsAdd() {
         add(project);
     }
 
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date().toISOString().substr(0, 10));
+    const [endDate, setEndDate] = useState('');
 
     return (
         <Container>
@@ -60,6 +61,8 @@ export default function ProjectsAdd() {
                     <Form.Control
                         type="date"
                         name="creationDate"
+                        value={startDate}
+                        onChange={(date) => setStartDate(date.target.value)}
                     />
                 </FormGroup>
 
@@ -68,6 +71,8 @@ export default function ProjectsAdd() {
                     <Form.Control
                         type="date"
                         name="completionDate"
+                        value={endDate}
+                        onChange={(date) => setEndDate(date.target.value)}
                     />
                 </FormGroup>
 
