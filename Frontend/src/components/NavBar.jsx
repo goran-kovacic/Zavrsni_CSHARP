@@ -19,7 +19,9 @@ export default function NavBar() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="https://kovacicg-001-site1.ltempurl.com/swagger/index.html"
+                        <Nav.Link 
+                        // href="https://kovacicg-001-site1.ltempurl.com/swagger/index.html"
+                        href="https://printtracker.runasp.net/swagger/index.html"
                         target='_blank'>API</Nav.Link>                        
                         <NavDropdown title="MENU" id="collapsible-nav-dropdown">
                             <NavDropdown.Item 
