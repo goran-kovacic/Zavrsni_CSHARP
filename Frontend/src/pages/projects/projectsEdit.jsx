@@ -55,7 +55,8 @@ export default function ProjectsEdit(){
         edit(project);
     }
 
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date().toISOString().substr(0, 10));
+    const [endDate, setEndDate] = useState('');
 
     return (
         <Container>
@@ -74,7 +75,7 @@ export default function ProjectsEdit(){
                     <Form.Control 
                     type="date" 
                     name="creationDate"
-                    defaultValue={project.creationDate}
+                    value={project.creationDate}
                     />
                 </Form.Group> 
 
