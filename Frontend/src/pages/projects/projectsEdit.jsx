@@ -4,6 +4,8 @@ import { RouteNames } from "../../constants";
 import ReactDatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
 import ProjectService from "../../services/ProjectService";
+import moment from 'moment';
+
 
 
 export default function ProjectsEdit(){
@@ -75,18 +77,18 @@ export default function ProjectsEdit(){
                     <Form.Control 
                     type="date" 
                     name="creationDate"
-                    value={project.creationDate}
+                    value={moment(project.creationDate).format("yyyy-MM-dd")}
                     />
                 </Form.Group> 
 
-                <Form.Group controlId="completionDate">
+                {/* <Form.Group controlId="completionDate">
                     <Form.Label>Completion Date</Form.Label>
                     <Form.Control 
                     type="date" 
                     name="completionDate" 
                     defaultValue={project.completionDate}
                     />
-            </Form.Group>
+            </Form.Group> */}
                 <Form.Group controlId="projectDescription">
                     <Form.Label>Project Description</Form.Label>
                     <Form.Control 
@@ -103,12 +105,12 @@ export default function ProjectsEdit(){
                 <hr />
 
             <Row>
-                <Col xs={6} sm={6} md={3} lg={6} xl={1} xxl={2}>
+                <Col>
                     <Link className="btn btn-danger siroko" to={RouteNames.PROJECT_VIEW}>
                         Cancel
                     </Link>
                 </Col>
-                <Col xs={6} sm={6} md={9} lg={6} xl={1} xxl={10}>
+                <Col>
                     <Button className="siroko" variant="primary" type="submit">
                         Edit
                     </Button>
