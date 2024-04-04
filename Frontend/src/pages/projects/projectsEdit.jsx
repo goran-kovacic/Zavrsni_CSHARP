@@ -44,9 +44,10 @@ export default function ProjectsEdit(){
 
         const project = {
             projectName: podaci.get('projectName'),
-            // creationDate: 
-            // completionDate:
-            isCompleted: podaci.get('isCompleted') == 'on' ? true : false
+            creationDate: podaci.get('creationDate'),
+            completionDate: podaci.get('completionDate'),
+            isCompleted: podaci.get('isCompleted') == 'on' ? true : false,
+            projectDescription: podaci.get('projectDescription')
         };
 
         // console.log(project);
@@ -68,21 +69,30 @@ export default function ProjectsEdit(){
                     required 
                      />
                 </Form.Group>
-                {/* <Form.Group controlId="creationDate">
+                <Form.Group controlId="creationDate">
                     <Form.Label>Creation Date</Form.Label>
-                    <Form.Control type="text" name="creationDate" />
-                </Form.Group> */}
+                    <Form.Control 
+                    type="date" 
+                    name="creationDate"
+                    defaultValue={project.creationDate}
+                    />
+                </Form.Group> 
 
-                {/* <ReactDatePicker selected={startDate} onChange={(date)=>setStartDate(date)} /> */}
-
-                {/* <Form.Group controlId="completionDate">
+                <Form.Group controlId="completionDate">
                     <Form.Label>Completion Date</Form.Label>
-                    <Form.Control type="text" name="completionDate" />
-                </Form.Group>
+                    <Form.Control 
+                    type="date" 
+                    name="completionDate" 
+                    defaultValue={project.completionDate}
+                    />
+            </Form.Group>
                 <Form.Group controlId="projectDescription">
                     <Form.Label>Project Description</Form.Label>
-                    <Form.Control type="text" name="projectDescription" />
-                </Form.Group> */}
+                    <Form.Control 
+                    type="text" 
+                    name="projectDescription"
+                    defaultValue={project.projectDescription} />
+                </Form.Group>
                 <Form.Group controlId="isCompleted">
                     <Form.Check 
                     label="Completed" 

@@ -3,7 +3,8 @@ import Container from 'react-bootstrap/Container';
 import ProjectService from '../../services/ProjectService';
 import { Button, Table } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { RouteNames} from '../../constants'
+import { RouteNames } from '../../constants'
+import moment from 'moment';
 
 export default function Projects() {
 
@@ -24,9 +25,9 @@ export default function Projects() {
         GetProjects();
     }, []);
 
-    async function obrisiAsync(id){
+    async function obrisiAsync(id) {
         const odgovor = await ProjectService.del(id);
-        if(odgovor.greska){
+        if (odgovor.greska) {
             console.log(odgovor.poruka);
             alert('pogledaj konzolu');
             return;
@@ -37,7 +38,7 @@ export default function Projects() {
     function obrisi(id) {
         obrisiAsync(id);
     }
-    
+
     return (
         <>
             <Container>
@@ -57,29 +58,29 @@ export default function Projects() {
                         </tr>
                     </thead>
                     <tbody>
-                        {projects && projects.map((project,index)=>(
+                        {projects && projects.map((project, index) => (
                             <tr key={index}>
                                 <td>{project.projectName}</td>
                                 <td>
-                                    {project.isCompleted==null 
-                                    ? 'not defined'
-                                    : project.isCompleted ? 'Yes' : 'No'}
+                                    {project.isCompleted == null
+                                        ? 'not defined'
+                                        : project.isCompleted ? 'Yes' : 'No'}
                                 </td>
-                                <td>{project.creationDate}</td>
-                                <td>{project.completionDate}</td>
+                                <td>{moment(project.creationDate).format('DD/MM/YYYY')}</td>
+                                <td>{moment(project.completionDate).format('DD/MM/YYYY')}</td>
                                 <td>{project.totalPrintCount}</td>
                                 <td>{project.totalPrintTime}</td>
                                 <td>{project.totalCost}</td>
                                 <td>{project.projectDescription}</td>
                                 <td>
-                                    <Button 
-                                    onClick={()=>obrisi(project.id)}
-                                    variant='danger'
+                                    <Button
+                                        onClick={() => obrisi(project.id)}
+                                        variant='danger'
                                     >
                                         Delete
                                     </Button>
-                                    <Button 
-                                    onClick={()=>{navigate(`/projects/${project.id}`)}}                                                                        
+                                    <Button
+                                        onClick={() => { navigate(`/projects/${project.id}`) }}
                                     >
                                         Edit
                                     </Button>
