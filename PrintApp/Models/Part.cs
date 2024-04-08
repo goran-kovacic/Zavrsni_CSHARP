@@ -9,8 +9,8 @@ namespace PrintApp.Models
         public int? PrintTime { get; set; }
         [ForeignKey("project_id")]
         public Project? Project { get; set; }
-        //public List<PrintFile> FilesInPart { get; set; }
-        //public List<PrintJob> JobsInPart { get; set; }
+        public List<PrintFile>? FilesInPart { get; set; }
+        public List<PrintJob>? JobsInPart { get; set; }
         public override string ToString()
 
         {
