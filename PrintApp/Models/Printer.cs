@@ -6,6 +6,7 @@
         public string? Manufacturer { get; set; }
         public int? PrinterTime { get; set; }
         public int? FepCount { get; set; }
+        public List<PrintJob>? JobsInPrinter { get; set; }
 
         public override string ToString()
         {

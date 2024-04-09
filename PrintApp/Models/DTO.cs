@@ -57,9 +57,7 @@ namespace PrintApp.Models
 
     public record FileDTORead(
         int Id,
-        [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
         string? FileComment,
-        [Required(ErrorMessage ="{0} name required")]
         string? FilePath,
         string? FileType,
         int? FileVersion,
@@ -74,6 +72,24 @@ namespace PrintApp.Models
         string? FileType,
         int? FileVersion,
         int? PartId
+        );
+
+    public record PrinterDTORead(
+        int Id,
+        string? PrinterName,
+        string? Manufacturer,
+        int? PrinterTime,
+        int? FepCount
+        //int? PrintJobs
+        );
+
+    public record PrinterDTOInsertUpdate(
+        [Required(ErrorMessage ="{0} name required")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
+        string? PrinterName,
+        [Required(ErrorMessage ="{0} name required")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
+        string? Manufacturer        
         );
     
 }

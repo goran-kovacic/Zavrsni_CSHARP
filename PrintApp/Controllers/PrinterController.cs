@@ -1,58 +1,53 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PrintApp.Data;
+using PrintApp.Mappers;
 using PrintApp.Models;
+using System.Text;
 
 namespace PrintApp.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class PrinterController:ControllerBase
+    public class PrinterController: AppController<Printer, PrinterDTORead, PrinterDTOInsertUpdate>
     {
-        private readonly PrintAppContext _context;
-
-        public PrinterController(PrintAppContext context)
+        public PrinterController(PrintAppContext context) : base(context) 
         {
-            _context = context;
+            DbSet = _context.Printers;
+            _mapper = new MappingPrinters();
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        protected override void ControlDelete(Printer entity)
         {
-            return new JsonResult(_context.Printers.ToList());
+            if(entity != null && entity.JobsInPrinter!=null && entity.JobsInPrinter.Count() > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Cannot delete because of foreign keys");
+                throw new Exception(sb.ToString()[..^2]);
+            }
         }
 
-        [HttpPost]
-        public IActionResult Post(Printer printer)
+        protected override List<PrinterDTORead> UcitajSve()
         {
-            _context.Printers.Add(printer);
-            _context.SaveChanges();
-            return new JsonResult(printer);
+            var list = _context.Printers                
+                .Include(p => p.JobsInPrinter)
+                .ToList();
+            if (list == null || list.Count == 0)
+            {
+                throw new Exception("nema podataka u bazi");
+            }
+            return _mapper.MapReadList(list);
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
-        public IActionResult Put(int id, Printer printer) 
+        protected override Printer NadiEntitet(int id)
         {
-            var printerFromDB = _context.Printers.Find(id);
-            printerFromDB.PrinterName = printer.PrinterName;
-            printerFromDB.Manufacturer = printer.Manufacturer;
-            printerFromDB.PrinterTime = printer.PrinterTime;
-            printerFromDB.FepCount = printer.FepCount;
-
-            _context.Printers.Update(printerFromDB);
-            _context.SaveChanges(true);
-            return new JsonResult(printerFromDB);
+            return _context.Printers                
+                .Include(p => p.JobsInPrinter)
+                .FirstOrDefault(x => x.Id == id)
+                ?? throw new Exception("ne postoji printer sa sifrom " + id + " u bazi");
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
-        [Produces("application/json")]
-        public IActionResult Delete(int id)
-        {
-            var printerFromDB = _context.Printers.Find(id);
-            _context.Printers.Remove(printerFromDB);
-            _context.SaveChanges();
-            return new JsonResult(new { poruka = "Deleted" });
-        }
+        
+
     }
 }
