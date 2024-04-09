@@ -14,17 +14,51 @@ namespace PrintApp.Models
         string? ProjectDescription
         );
 
-    public record ProjectDTOInsertUpdate(
-        [Required(ErrorMessage ="{0} required")]
-        string? ProjectName,
+
+
+    public class ProjectDTOInsertUpdate : IValidatableObject
+    {
+        [Required(ErrorMessage = "{0} required")]
+        public string ProjectName { get; set; }
 
         [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
-        string? ProjectDescription,
-        //[Required(ErrorMessage = "Creation date is required")]
-        DateTime? CreationDate,
-        [DateGreaterThan("CreationDate")]
-        DateTime? CompletionDate
-        );
+        public string? ProjectDescription { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? CreationDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? CompletionDate { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+
+            if (CreationDate.Value == DateTime.MinValue )
+            {
+                yield return new ValidationResult("cannot enter completion date without creation date");
+            }
+
+            if(CompletionDate.Value <= CreationDate.Value)
+            {
+                yield return new ValidationResult("end date must be greater than start date");
+            }
+
+            
+        }
+    }
+
+
+
+
+    //public record ProjectDTOInsertUpdate(
+    //    [Required(ErrorMessage ="{0} required")]
+    //    string? ProjectName,
+
+    //    [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
+    //    string? ProjectDescription,
+    //    //[Required(ErrorMessage = "Creation date is required")]
+    //    DateTime? CreationDate,
+    //    [DateGreaterThan("CreationDate")]
+    //    DateTime? CompletionDate
+    //    );
 
     public record UserDTORead(
         int Id,

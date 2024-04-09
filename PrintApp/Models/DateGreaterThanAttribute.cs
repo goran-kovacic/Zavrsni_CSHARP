@@ -15,11 +15,23 @@ namespace PrintApp.Models
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var currentValue = (DateTime)value;
+            object o = validationContext.ObjectType.GetProperty(_comparisonProperty);
+            DateTime comparisonValue = (DateTime)o;
 
-            var comparisonValue = (DateTime)validationContext.ObjectType.GetProperty(_comparisonProperty)
-                .GetValue(validationContext.ObjectInstance);
 
-            if(comparisonValue == null && currentValue != null)
+
+            Console.WriteLine(comparisonValue);
+
+
+
+
+            //  DateTime 
+            //         comparisonValue = (DateTime)validationContext.ObjectType.GetProperty(_comparisonProperty)
+            //                      .GetValue(validationContext.ObjectInstance);
+
+
+
+            if (comparisonValue.Equals(DateTime.MinValue) && currentValue != null)
             {
                 return new ValidationResult(ErrorMessage = "Cannot input completion date while creation date null");
             }
