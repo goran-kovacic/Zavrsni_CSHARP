@@ -15,10 +15,10 @@ namespace PrintApp.Models
         );
 
     public record ProjectDTOInsertUpdate(
-        [Required(ErrorMessage ="Name required")]
+        [Required(ErrorMessage ="{0} required")]
         string? ProjectName,
 
-        [MaxLength(200, ErrorMessage = "Description cannot exceed {1} characters")]
+        [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
         string? ProjectDescription,
         //[Required(ErrorMessage = "Creation date is required")]
         DateTime? CreationDate,
@@ -33,10 +33,10 @@ namespace PrintApp.Models
         );
 
     public record UserDTOInsertUpdate(
-        [Required(ErrorMessage ="User name required")]
-        [MaxLength(20, ErrorMessage = "Username cannot exceed {1} characters")]
+        [Required(ErrorMessage ="{0} required")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
         string UserName,
-        [Required(ErrorMessage ="Password required")]
+        [Required(ErrorMessage ="{0} required")]
         string UserPassword
         );
 
@@ -49,10 +49,31 @@ namespace PrintApp.Models
         );
 
     public record PartDTOInsertUpdate(
-        [Required(ErrorMessage ="Part name required")]
-        [MaxLength(20, ErrorMessage = "Part name cannot exceed {1} characters")]
+        [Required(ErrorMessage ="{0} name required")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
         string PartName,
         int? ProjectId
+        );
+
+    public record FileDTORead(
+        int Id,
+        [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
+        string? FileComment,
+        [Required(ErrorMessage ="{0} name required")]
+        string? FilePath,
+        string? FileType,
+        int? FileVersion,
+        string? Part_Name
+        );
+
+    public record FileDTOInsertUpdate(
+        [Required(ErrorMessage ="{0} name required")]
+        string? FilePath,
+        [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
+        string? FileComment,
+        string? FileType,
+        int? FileVersion,
+        int? PartId
         );
     
 }
