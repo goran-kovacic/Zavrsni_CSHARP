@@ -12,7 +12,7 @@ namespace PrintApp.Models
         public int? TotalPrintCount { get; set; }
         public decimal? TotalCost { get; set; }
         public string? ProjectDescription { get; set; }
-        //public List<Part> PartsInProject { get; set; }
+        public List<Part> PartsInProject { get; set; }
 
         public override string ToString()
         {
