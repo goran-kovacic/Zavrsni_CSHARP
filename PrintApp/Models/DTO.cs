@@ -155,4 +155,24 @@ namespace PrintApp.Models
 
         );
     
+    public record JobDTORead(
+        int Id,
+        decimal? Cost,
+        int? PrintTime,
+        bool? Result,
+        decimal? Volume,
+        string? Material_Name,
+        string? Part_Name,
+        string? Printer_Name
+        );
+
+    public record JobDTOInsertUpdate(
+        bool? Result,
+        [Range(1, 1000, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage = "{0} obavezno")]
+        decimal? Volume,
+        int? MaterialId,
+        int? PartId,
+        int? PrinterId
+        );
 }
