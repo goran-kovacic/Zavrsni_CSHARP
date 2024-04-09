@@ -1,67 +1,77 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PrintApp.Data;
+using PrintApp.Mappers;
 using PrintApp.Models;
+using System.Text;
 
 namespace PrintApp.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class PartController:ControllerBase
+    public class PartController: AppController<Part, PartDTORead, PartDTOInsertUpdate>
     {
-        private readonly PrintAppContext _context;
-
-        public PartController(PrintAppContext context)
+        public PartController(PrintAppContext context) : base(context)
         {
-            _context = context; 
+            DbSet = _context.Parts;
+            _mapper = new MappingParts();
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        protected override void ControlDelete(Part entity)
         {
-            return new JsonResult(_context.Parts.ToList());
+            if (entity != null
+                && (entity.FilesInPart != null && entity.FilesInPart.Count() > 0)
+                || (entity.JobsInPart !=null && entity.JobsInPart.Count() > 0))
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Cannot delete part because of foreign keys");
+                throw new Exception(sb.ToString()[..^2]);
+            }
         }
 
-        [HttpGet]
-        [Route("{id:int}")]
-        public IActionResult GetById(int id)
+        protected override List<PartDTORead> UcitajSve()
         {
-            return new JsonResult(_context.Parts.Find(id));
+            var list = _context.Parts
+                .Include(p => p.Project)
+                .Include(p => p.JobsInPart)
+                .Include(p => p.FilesInPart)
+                .ToList();
+            if(list == null || list.Count == 0)
+            {
+                throw new Exception("nema podataka u bazi");
+            }
+            return _mapper.MapReadList(list);
         }
 
-        [HttpPost]
-        public IActionResult Post(Part part)
+        protected override Part NadiEntitet(int id)
         {
-            _context.Parts.Add(part);
-            _context.SaveChanges();
-
-            return new JsonResult(part);
+            return _context.Parts
+                .Include(p => p.Project)
+                .Include(p => p.JobsInPart)
+                .Include(p => p.FilesInPart)
+                .FirstOrDefault(x => x.Id == id)
+                ?? throw new Exception("ne postoji part sa sifrom " + id + " u bazi");
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
-        public IActionResult Put(int id, Part part)
+        protected override Part PromjeniEntitet(PartDTOInsertUpdate dto, Part entity)
         {
-            var partDB = _context.Parts.Find(id);
-            partDB.PartName = part.PartName;
-            partDB.Cost = part.Cost;
-            partDB.PrintTime = part.PrintTime;
-            partDB.Project = part.Project;
+            var project = _context.Projects.Find(dto.ProjectId)
+                ?? throw new Exception("Ne postoji project sa šifrom " + dto.ProjectId + " u bazi");
 
-            _context.Parts.Update(partDB);
-            _context.SaveChanges(true);
+            entity.PartName = dto.PartName;
+            entity.Project = project;
 
-            return new JsonResult(partDB);
+            return entity;
         }
 
-        [HttpDelete]
-        [Route("{id:int}")]
-        [Produces("application/json")]
-        public IActionResult Delete(int id)
+        protected override Part KreirajEntitet(PartDTOInsertUpdate dto)
         {
-            var partFromDB = _context.Parts.Find(id);
-            _context.Parts.Remove(partFromDB);
-            _context.SaveChanges();
-            return new JsonResult(new { poruka = "Deleted" });
+            var project = _context.Projects.Find(dto.ProjectId)
+                ?? throw new Exception("Ne postoji project sa šifrom " + dto.ProjectId + " u bazi");
+            var entity = _mapper.MapInsertUpdatedFromDTO(dto);
+            entity.Project = project;
+
+            return entity;
         }
     }
 }

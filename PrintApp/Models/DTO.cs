@@ -22,7 +22,7 @@ namespace PrintApp.Models
         string? ProjectDescription,
         //[Required(ErrorMessage = "Creation date is required")]
         DateTime? CreationDate,
-        //[Required(ErrorMessage = "Completion date is required")]
+        [DateGreaterThan("CreationDate")]
         DateTime? CompletionDate
         );
 
@@ -40,5 +40,19 @@ namespace PrintApp.Models
         string UserPassword
         );
 
+    public record PartDTORead(
+        int Id,
+        string? PartName,
+        decimal? Cost,
+        int? PrintTime,
+        string? Project_Name
+        );
+
+    public record PartDTOInsertUpdate(
+        [Required(ErrorMessage ="Part name required")]
+        [MaxLength(20, ErrorMessage = "Part name cannot exceed {1} characters")]
+        string PartName,
+        int? ProjectId
+        );
     
 }
