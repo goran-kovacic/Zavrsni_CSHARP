@@ -31,12 +31,11 @@ namespace PrintApp.Models
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
 
-            if (CreationDate.Value == DateTime.MinValue )
+            if ( CreationDate==null && CompletionDate!=null)
             {
                 yield return new ValidationResult("cannot enter completion date without creation date");
             }
-
-            if(CompletionDate.Value <= CreationDate.Value)
+            else  if(CompletionDate.Value <= CreationDate.Value)
             {
                 yield return new ValidationResult("end date must be greater than start date");
             }
