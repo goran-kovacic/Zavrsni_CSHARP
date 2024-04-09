@@ -11,8 +11,7 @@ namespace PrintApp.Models
         int? TotalPrintTime, 
         int? TotalPrintCount,
         decimal? TotalCost,
-        string? ProjectDescription,
-        int? PartNumbers
+        string? ProjectDescription
         );
 
     public record ProjectDTOInsertUpdate(
