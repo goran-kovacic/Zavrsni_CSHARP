@@ -15,6 +15,7 @@
         public decimal LiftSpeed { get; set; }
         public decimal? LightOffDelay { get; set; }
         public decimal RetractSpeed { get; set; }
+        public List<PrintJob>? JobsInMaterial { get; set; }
 
         public override string ToString()
         {

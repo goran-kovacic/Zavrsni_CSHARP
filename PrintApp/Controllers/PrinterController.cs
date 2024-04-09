@@ -47,7 +47,12 @@ namespace PrintApp.Controllers
                 ?? throw new Exception("ne postoji printer sa sifrom " + id + " u bazi");
         }
 
-        
+        protected override Printer KreirajEntitet(PrinterDTOInsertUpdate dto)
+        {
+            var entitet = _mapper.MapInsertUpdatedFromDTO(dto);
+            entitet.JobsInPrinter = new List<PrintJob> ();
+            return entitet;
+        }
 
     }
 }

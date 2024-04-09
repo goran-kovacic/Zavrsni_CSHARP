@@ -16,8 +16,8 @@ namespace PrintApp.Mappers
                     entity.Manufacturer,
                     entity.PrinterName,
                     entity.FepCount,
-                    entity.PrinterTime
-                    //entity.JobsInPrinter.Count
+                    entity.PrinterTime,
+                    entity.JobsInPrinter.Count() == null ? 0 : entity.JobsInPrinter.Count()
                     ));
             }));
 

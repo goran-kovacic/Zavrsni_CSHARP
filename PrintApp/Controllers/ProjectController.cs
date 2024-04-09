@@ -34,6 +34,24 @@ namespace PrintApp.Controllers
             }
         }
 
-        
+        protected override Project KreirajEntitet(ProjectDTOInsertUpdate dto)
+        {
+            var entity = _mapper.MapInsertUpdatedFromDTO(dto);
+            entity.PartsInProject = new List<Part>();
+            return entity;
+        }
+
+        protected override List<ProjectDTORead> UcitajSve()
+        {
+            var list = _context.Projects.Include(p => p.PartsInProject).ToList();
+
+            if(list == null ||list.Count == 0)
+            {
+                throw new Exception("nema podataka u bazi");
+            }
+            return _mapper.MapReadList(list);
+        }
+
+
     }
 }

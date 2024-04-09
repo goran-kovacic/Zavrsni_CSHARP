@@ -11,7 +11,8 @@ namespace PrintApp.Models
         int? TotalPrintTime, 
         int? TotalPrintCount,
         decimal? TotalCost,
-        string? ProjectDescription
+        string? ProjectDescription,
+        int? PartNumbers
         );
 
     public record ProjectDTOInsertUpdate(
@@ -45,11 +46,13 @@ namespace PrintApp.Models
         string? PartName,
         decimal? Cost,
         int? PrintTime,
-        string? Project_Name
+        string? Project_Name,
+        int FilesNumber,
+        int JobsNumber
         );
 
     public record PartDTOInsertUpdate(
-        [Required(ErrorMessage ="{0} name required")]
+        [Required(ErrorMessage ="{0} required")]
         [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
         string PartName,
         int? ProjectId
@@ -65,7 +68,7 @@ namespace PrintApp.Models
         );
 
     public record FileDTOInsertUpdate(
-        [Required(ErrorMessage ="{0} name required")]
+        [Required(ErrorMessage ="{0} required")]
         string? FilePath,
         [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
         string? FileComment,
@@ -79,17 +82,78 @@ namespace PrintApp.Models
         string? PrinterName,
         string? Manufacturer,
         int? PrinterTime,
-        int? FepCount
-        //int? PrintJobs
+        int? FepCount,
+        int? JobsNumber
         );
 
     public record PrinterDTOInsertUpdate(
-        [Required(ErrorMessage ="{0} name required")]
+        [Required(ErrorMessage ="{0} required")]
         [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
         string? PrinterName,
-        [Required(ErrorMessage ="{0} name required")]
+        [Required(ErrorMessage ="{0} required")]
         [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
         string? Manufacturer        
+        );
+
+    public record MaterialDTORead(
+        int Id,
+        string Manufacturer,
+        string MaterialName,
+        int LiftDistance,
+        int BottomLiftDistance,
+        decimal BottomExposure,
+        decimal BottomLiftSpeed,
+        decimal BottomRetractSpeed,
+        decimal CalibratedExposure,
+        decimal CostPerUnit,
+        decimal LayerHeight,
+        decimal LiftSpeed,
+        decimal? LightOffDelay,
+        decimal RetractSpeed
+        //int? PrintJobs
+        );
+
+    public record MaterialDTOInsertUpdate(
+        [Required(ErrorMessage ="{0} required")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
+        string Manufacturer,
+        [Required(ErrorMessage ="{0} required")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
+        string MaterialName,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 50, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        int LiftDistance,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 50, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        int BottomLiftDistance,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 100, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        decimal BottomExposure,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 20, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        decimal BottomLiftSpeed,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 20, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        decimal BottomRetractSpeed,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 50, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        decimal CalibratedExposure,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 1000, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        decimal CostPerUnit,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 200, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        decimal LayerHeight,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 20, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        decimal LiftSpeed,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 100, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        decimal? LightOffDelay,
+        [Required(ErrorMessage ="{0} required")]
+        [Range(0, 20, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        decimal RetractSpeed
+
         );
     
 }
