@@ -33,10 +33,5 @@ namespace PrintApp.Controllers
                 throw new Exception(sb.ToString()[..^2]);
             }
         }
-
-        
-        
-
-
     }
 }

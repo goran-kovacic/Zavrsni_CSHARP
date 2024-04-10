@@ -1,69 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PrintApp.Data;
 using PrintApp.Models;
+using System.Text;
 
 namespace PrintApp.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class MaterialController:ControllerBase
+    public class MaterialController:AppController<Material, MaterialDTORead, MaterialDTOInsertUpdate>
     {
-        private readonly PrintAppContext _context;
-
-        public MaterialController(PrintAppContext context)
+        public MaterialController(PrintAppContext context) : base(context) 
         {
-            _context = context;
+            DbSet = _context.Materials;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        protected override void ControlDelete(Material entity)
         {
-            return new JsonResult(_context.Materials.ToList());
-        }
+            var jobs = _context.PrintJobs
+                .Include(p => p.Material)
+                .Where(p => p.Material.Id == entity.Id).ToList();
 
-        [HttpPost]
-        public IActionResult Post(Material material)
-        {
-            _context.Materials.Add(material);
-            _context.SaveChanges();
-
-            return new JsonResult(material);
-        }
-
-        [HttpPut]
-        [Route("{id:int}")]
-        public IActionResult Put(int id, Material material)
-        {
-            var materialFromDB = _context.Materials.Find(id);
-            materialFromDB.MaterialName = material.MaterialName;
-            materialFromDB.Manufacturer = material.Manufacturer;
-            materialFromDB.LiftDistance = material.LiftDistance;
-            materialFromDB.BottomLiftDistance = material.BottomLiftDistance;
-            materialFromDB.BottomExposure = material.BottomExposure;
-            materialFromDB.BottomLiftSpeed = material.BottomLiftSpeed;
-            materialFromDB.BottomRetractSpeed = material.BottomRetractSpeed;
-            materialFromDB.CalibratedExposure = material.CalibratedExposure;
-            materialFromDB.CostPerUnit = material.CostPerUnit;
-            materialFromDB.LayerHeight = material.LayerHeight;
-            materialFromDB.LiftSpeed = material.LiftSpeed;
-            materialFromDB.LightOffDelay = material.LightOffDelay;
-            materialFromDB.RetractSpeed = material.RetractSpeed;
-
-            _context.Materials.Update(materialFromDB);
-            _context.SaveChanges(true);
-
-            return new JsonResult(materialFromDB);
-        }
-
-        [HttpDelete]
-        [Route("{id:int}")]
-        [Produces("application/json")]
-        public IActionResult Delete(int id)
-        {
-            var materialFromDB = _context.Materials.Find(id);
-            _context.Materials.Remove(materialFromDB);
-            _context.SaveChanges();
-            return new JsonResult(new { poruka = "Deleted" });
+            if(jobs !=null && jobs.Count > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Cannot delete part because of foreign keys");
+                throw new Exception(sb.ToString());
+            }
         }
     }
 }

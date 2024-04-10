@@ -25,7 +25,7 @@ namespace PrintApp.Controllers
         {
             var list = _context.PrintFiles
                 .Include(p => p.Part).ToList();
-            if(list == null ||list.Count == 0)
+            if (list == null || list.Count == 0)
             {
                 throw new Exception("nema podataka u bazi");
             }

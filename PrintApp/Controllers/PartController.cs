@@ -25,7 +25,7 @@ namespace PrintApp.Controllers
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("Cannot delete part because of foreign keys");
-                throw new Exception(sb.ToString()[..^2]);
+                throw new Exception(sb.ToString());
             }
         }
 

@@ -27,6 +27,7 @@ namespace PrintApp.Models
         public DateTime? CreationDate { get; set; }
         [DataType(DataType.Date)]
         public DateTime? CompletionDate { get; set; }
+        public bool? IsCompleted { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -106,6 +107,7 @@ namespace PrintApp.Models
         string? FileComment,
         string? FileType,
         int? FileVersion,
+        [Required(ErrorMessage ="{0} required")]
         int? PartId
         );
 
