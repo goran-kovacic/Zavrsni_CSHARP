@@ -33,6 +33,7 @@ namespace PrintApp.Mappers
                 c.CreateMap<PrintJob, JobDTOInsertUpdate>()
                 .ConstructUsing(entity =>
                 new JobDTOInsertUpdate(
+                    entity.PrintTime,
                     entity.Result,
                     entity.Volume,
                     entity.Material == null ? null : entity.Material.Id,

@@ -23,14 +23,20 @@ namespace PrintApp.Controllers
 
         protected override PrintJob KreirajEntitet(JobDTOInsertUpdate dto)
         {
-            var printer = _context.Printers.Find(dto.PrinterId);
-            var material = _context.Materials.Find(dto.MaterialId);
-            var part = _context.Parts.Find(dto.PartId);
+            var printer = _context.Printers.Find(dto.PrinterId)
+                ?? throw new Exception("Ne postoji printer sa šifrom " + dto.PrinterId + " u bazi");
+            var material = _context.Materials.Find(dto.MaterialId)
+                ?? throw new Exception("Ne postoji resin sa šifrom " + dto.MaterialId + " u bazi");
+            var part = _context.Parts.Find(dto.PartId)
+                ?? throw new Exception("Ne postoji part sa šifrom " + dto.PartId + " u bazi");
             var entity = _mapper.MapInsertUpdatedFromDTO(dto);
 
             entity.Printer = printer;
             entity.Material = material;
             entity.Part = part;
+
+            entity.Printer.FepCount = entity.Printer.FepCount + 1;
+            entity.Printer.PrinterTime = entity.Printer.PrinterTime + entity.PrintTime;
 
             return entity;
         }

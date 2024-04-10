@@ -9,6 +9,6 @@ namespace PrintApp.Models
         public string? FileType { get; set; }
         public int FileVersion { get; set; }
         [ForeignKey("part")]
-        public Part Part { get; set; }
+        public Part? Part { get; set; }
     }
 }

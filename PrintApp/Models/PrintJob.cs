@@ -11,7 +11,7 @@ namespace PrintApp.Models
         [ForeignKey("material")]
         public Material? Material { get; set; }
         [ForeignKey("part_id")]
-        public Part Part { get; set; }
+        public Part? Part { get; set; }
         [ForeignKey("printer_id")]
         public Printer? Printer { get; set; }
 

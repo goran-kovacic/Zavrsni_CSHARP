@@ -202,12 +202,17 @@ namespace PrintApp.Models
         );
 
     public record JobDTOInsertUpdate(
+        [Required(ErrorMessage = "{0} obavezno")]
+        int? PrintTime,
         bool? Result,
         [Range(1, 1000, ErrorMessage = "{0} mora biti između {1} i {2}")]
         [Required(ErrorMessage = "{0} obavezno")]
         decimal? Volume,
+        [Required(ErrorMessage = "{0} obavezno")]
         int? MaterialId,
+        [Required(ErrorMessage = "{0} obavezno")]
         int? PartId,
+        [Required(ErrorMessage = "{0} obavezno")]
         int? PrinterId
         );
 }
