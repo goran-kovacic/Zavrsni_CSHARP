@@ -32,18 +32,35 @@ export default function ProjectsAdd() {
 
         const podaci = new FormData(e.target);
 
-        const project = {
-            projectName: podaci.get('projectName'),
-            creationDate: podaci.get('creationDate'),
-            completionDate: podaci.get('completionDate'),
-            projectDescription: podaci.get('projectDescription'),
-            isCompleted: podaci.get('isCompleted') == 'on' ? true : false
-        };
+        let creationDate=null;
+        let completionDate=null;
+
+        if(podaci.get('creationDate')!=''){
+            creationDate = moment.utc(podaci.get('creationDate'));
+        }else{
+            creationDate=null;
+        }
+
+        if(podaci.get('completionDate')!=''){
+            completionDate = moment.utc(podaci.get('completionDate'));
+        }else{
+            completionDate=null;
+        }
+
 
         // console.log(project);
 
-        add(project);
+        add({
+            projectName: podaci.get('projectName'),
+            creationDate: creationDate,
+            completionDate: completionDate,
+            projectDescription: podaci.get('projectDescription'),
+            isCompleted: podaci.get('isCompleted') == 'on' ? true : false
+
+        });
     }
+
+    
 
     const [startDate, setStartDate] = useState(new Date().toISOString().substr(0, 10));
     const [endDate, setEndDate] = useState('');

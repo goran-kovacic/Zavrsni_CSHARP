@@ -21,6 +21,8 @@ export default function ProjectsEdit(){
             alert('pogledaj konzolu');
             return;
         }
+        o.poruka.creationDate = moment.utc(o.poruka.creationDate).format('yyyy-MM-DD')
+        o.poruka.completionDate = moment.utc(o.poruka.completionDate).format('yyyy-MM-DD')
         setProject(o.poruka);
     }
 
@@ -42,7 +44,7 @@ export default function ProjectsEdit(){
         e.preventDefault();
         // alert('Dodajem project');
 
-        const podaci = new FormData(e.target);
+        const podaci = new FormData(e.target);        
 
         const project = {
             projectName: podaci.get('projectName'),
@@ -77,18 +79,18 @@ export default function ProjectsEdit(){
                     <Form.Control 
                     type="date" 
                     name="creationDate"
-                    value={moment(project.creationDate).format("yyyy-MM-dd")}
+                    defaultValue={project.creationDate}
                     />
                 </Form.Group> 
 
-                {/* <Form.Group controlId="completionDate">
+                <Form.Group controlId="completionDate">
                     <Form.Label>Completion Date</Form.Label>
                     <Form.Control 
                     type="date" 
                     name="completionDate" 
                     defaultValue={project.completionDate}
                     />
-            </Form.Group> */}
+            </Form.Group>
                 <Form.Group controlId="projectDescription">
                     <Form.Label>Project Description</Form.Label>
                     <Form.Control 
