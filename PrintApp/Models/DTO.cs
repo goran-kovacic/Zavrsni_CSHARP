@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace PrintApp.Models
 {
@@ -35,6 +37,9 @@ namespace PrintApp.Models
             if ( CreationDate==null && CompletionDate!=null)
             {
                 yield return new ValidationResult("cannot enter completion date without creation date");
+            }else if(CreationDate==null && CompletionDate==null){
+                yield return ValidationResult.Success;
+
             }
             else  if(CompletionDate.Value <= CreationDate.Value)
             {
