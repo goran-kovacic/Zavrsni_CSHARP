@@ -45,6 +45,8 @@ export default function ProjectsAdd() {
         add(project);
     }
 
+    
+
     const [startDate, setStartDate] = useState(new Date().toISOString().substr(0, 10));
     const [endDate, setEndDate] = useState('');
 
