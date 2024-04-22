@@ -6,10 +6,16 @@ import './App.css'
 import NavBar from './components/NavBar'
 import { Route, Routes } from 'react-router-dom'
 import { RouteNames } from './constants'
+
 import Pocetna from './pages/pocetna'
+
 import Projects from './pages/projects/projects'
 import ProjectsAdd from './pages/projects/projectsAdd'
 import ProjectsEdit from './pages/projects/projectsEdit'
+
+import Printers from './pages/printers/printers'
+import PrintersAdd from './pages/printers/printersAdd'
+import PrintersEdit from './pages/printers/printersEdit'
 
 function App() {
   
@@ -18,9 +24,14 @@ function App() {
       <NavBar />
       <Routes>
         <Route path={RouteNames.HOME} element={<Pocetna />} />
+
         <Route path={RouteNames.PROJECT_VIEW} element={<Projects />} />
         <Route path={RouteNames.PROJECT_NEW} element={<ProjectsAdd />} />
         <Route path={RouteNames.PROJECT_EDIT} element={<ProjectsEdit />} />
+
+        <Route path={RouteNames.PRINTER_VIEW} element={<Printers />} />
+        <Route path={RouteNames.PRINTERS_NEW} element={<PrintersAdd />} />
+        <Route path={RouteNames.PRINTERS_EDIT} element={<PrintersEdit />} />
       </Routes>
     </>
   )

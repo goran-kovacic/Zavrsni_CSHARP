@@ -37,9 +37,8 @@ namespace PrintApp.Models
             if ( CreationDate==null && CompletionDate!=null)
             {
                 yield return new ValidationResult("cannot enter completion date without creation date");
-            }else if(CreationDate==null && CompletionDate==null){
+            }else if(CreationDate==null || CompletionDate==null){
                 yield return ValidationResult.Success;
-
             }
             else  if(CompletionDate.Value <= CreationDate.Value)
             {

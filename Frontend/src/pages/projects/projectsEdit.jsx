@@ -48,8 +48,8 @@ export default function ProjectsEdit(){
 
         const project = {
             projectName: podaci.get('projectName'),
-            creationDate: podaci.get('creationDate'),
-            completionDate: podaci.get('completionDate'),
+            creationDate: podaci.get('creationDate') == "" ? null : podacit.get('creationDate'),
+            completionDate: podaci.get('completionDate') == "" ? null : podaci.get('completionDate'),
             isCompleted: podaci.get('isCompleted') == 'on' ? true : false,
             projectDescription: podaci.get('projectDescription')
         };

@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { RouteNames } from '../constants';
 import { useNavigate } from 'react-router-dom';
+import { NavItem, NavLink } from 'react-bootstrap';
 
 export default function NavBar() {
 
@@ -19,13 +20,21 @@ export default function NavBar() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link 
-                        // href="https://kovacicg-001-site1.ltempurl.com/swagger/index.html"
-                        href="https://printtracker.runasp.net/swagger/index.html"
-                        target='_blank'>API</Nav.Link>                        
-                        <NavDropdown title="MENU" id="collapsible-nav-dropdown">
-                            <NavDropdown.Item 
-                            onClick={() => navigate(RouteNames.PROJECT_VIEW)}>
+                        <Nav.Link
+                            // href="https://kovacicg-001-site1.ltempurl.com/swagger/index.html"
+                            href="https://printtracker.runasp.net/swagger/index.html"
+                            target='_blank'>API</Nav.Link>
+                        <NavLink
+                            onClick={() => navigate(RouteNames.PROJECT_VIEW)}
+                        >Projects</NavLink>
+
+                        <NavLink
+                            onClick={() => navigate(RouteNames.PRINTER_VIEW)}
+                        >Printers</NavLink>
+
+                        {/* <NavDropdown title="MENU" id="collapsible-nav-dropdown">
+                            <NavDropdown.Item
+                                onClick={() => navigate(RouteNames.PROJECT_VIEW)}>
                                 Projects</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">
                                 Printers
@@ -35,7 +44,7 @@ export default function NavBar() {
                             <NavDropdown.Item href="#action/3.4">
                                 Users
                             </NavDropdown.Item>
-                        </NavDropdown>
+                        </NavDropdown> */}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
