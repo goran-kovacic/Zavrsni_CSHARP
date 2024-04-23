@@ -7,29 +7,31 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import moment from 'moment';
+import useError from "../../hooks/useError";
+import Akcije from "../../components/Akcije";
+import InputText from "../../components/InputText";
+import InputCheckbox from "../../components/InputCheckbox";
+import Service from "../../services/ProjectService";
 
 import { hr } from 'date-fns/locale/hr';
 registerLocale('hr', hr);
 setDefaultLocale('hr');
 
 export default function ProjectsAdd() {
-
     const navigate = useNavigate();
+    const { prikaziError } = useError();
 
-    async function add(project) {
-        const odgovor = await ProjectService.post(project);
-        if (odgovor.greska) {
-            console.log(odgovor.poruka);
-            alert('pogledaj konzolu');
-            return;
-        }
-        navigate(RouteNames.PROJECT_VIEW);
+    async function dodajProject(project) {
+        const odgovor = await Service.dodaj('Project',project);
+        if(odgovor.ok){
+            navigate(RouteNames.PROJECT_VIEW);
+            return
+          }
+          prikaziError(odgovor.podaci);
     }
 
-    function obradiSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault();
-        // alert('Dodajem project');
-
         const podaci = new FormData(e.target);
 
         let creationDate=null;
@@ -46,28 +48,21 @@ export default function ProjectsAdd() {
         }else{
             completionDate=null;
         }
-
-
-        // console.log(project);
-
-        add({
+        dodajProject({
             projectName: podaci.get('projectName'),
             creationDate: creationDate,
             completionDate: completionDate,
             projectDescription: podaci.get('projectDescription'),
             isCompleted: podaci.get('isCompleted') == 'on' ? true : false
-
         });
     }
-
-    
 
     const [startDate, setStartDate] = useState(new Date().toISOString().substr(0, 10));
     const [endDate, setEndDate] = useState('');
 
     return (
         <Container>
-            <Form onSubmit={obradiSubmit}>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="projectName">
                     <Form.Label>Project Name</Form.Label>
                     <Form.Control type="text" name="projectName" required />

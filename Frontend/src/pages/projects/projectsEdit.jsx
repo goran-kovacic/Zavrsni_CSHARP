@@ -5,58 +5,61 @@ import ReactDatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
 import ProjectService from "../../services/ProjectService";
 import moment from 'moment';
-
+import useError from "../../hooks/useError";
+import Akcije from "../../components/Akcije";
+import InputText from "../../components/InputText";
+import InputCheckbox from "../../components/InputCheckbox";
+import Service from "../../services/ProjectService";
 
 
 export default function ProjectsEdit(){
 
     const navigate = useNavigate();
-    const [project, setProject] = useState({});
     const routeParams = useParams();
+    const [project, setProject] = useState({});
+    const { prikaziError } = useError();
 
-    async function getProject(){
-        const o = await ProjectService.getById(routeParams.id);
-        if(o.greska){
-            console.log(o.poruka);
-            alert('pogledaj konzolu');
+    async function dohvatiProject(){
+        const odgovor = await Service.getBySifra('Project',routeParams.id)
+        if(!odgovor.ok){
+            prikaziError(odgovor.podaci);
+            navigate(RouteNames.PROJECT_VIEW);
             return;
         }
-        o.poruka.creationDate = moment.utc(o.poruka.creationDate).format('yyyy-MM-DD')
-        o.poruka.completionDate = moment.utc(o.poruka.completionDate).format('yyyy-MM-DD')
-        setProject(o.poruka);
-    }
-
-    async function edit(project){
-        const odgovor = await ProjectService.put(routeParams.id,project);
-        if(odgovor.greska){
-            console.log(odgovor.poruka);
-            alert('pogledaj konzolu');
-            return;
-        }
-        navigate(RouteNames.PROJECT_VIEW);
+        let project = odgovor.podaci;
+        project.creationDate = moment.utc(project.creationDate).format('yyyy-MM-DD');
+        project.completionDate = moment.utc(project.completionDate).format('yyyy-MM-DD');
+        setProject(project);
     }
 
     useEffect(()=>{
-        getProject()
-    },[])
-    
-    function obradiSubmit(e){
+        dohvatiProject();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
+
+    async function promjeniProject(project){
+        const odgovor = await Service.promjeni('Project',routeParams.id,project);
+        if(odgovor.ok){
+          navigate(RouteNames.PROJECT_VIEW);
+          return;
+        }
+        prikaziError(odgovor.podaci);
+    }
+
+    function handleSubmit(e){
         e.preventDefault();
-        // alert('Dodajem project');
 
         const podaci = new FormData(e.target);        
 
         const project = {
             projectName: podaci.get('projectName'),
-            creationDate: podaci.get('creationDate') == "" ? null : podacit.get('creationDate'),
+            creationDate: podaci.get('creationDate') == "" ? null : podaci.get('creationDate'),
             completionDate: podaci.get('completionDate') == "" ? null : podaci.get('completionDate'),
             isCompleted: podaci.get('isCompleted') == 'on' ? true : false,
             projectDescription: podaci.get('projectDescription')
         };
 
-        // console.log(project);
-
-        edit(project);
+        promjeniProject(project);
     }
 
     const [startDate, setStartDate] = useState(new Date().toISOString().substr(0, 10));
@@ -64,8 +67,11 @@ export default function ProjectsEdit(){
 
     return (
         <Container>
-            <Form onSubmit={obradiSubmit}>
-                <Form.Group controlId="projectName">
+            <Form onSubmit={handleSubmit}>
+
+                <InputText atribut="projectName" vrijednost={project.projectName}/>
+
+                {/* <Form.Group controlId="projectName">
                     <Form.Label>Project Name</Form.Label>
                     <Form.Control 
                     type="text" 
@@ -73,7 +79,7 @@ export default function ProjectsEdit(){
                     defaultValue={project.projectName}
                     required 
                      />
-                </Form.Group>
+                </Form.Group> */}
                 <Form.Group controlId="creationDate">
                     <Form.Label>Creation Date</Form.Label>
                     <Form.Control 

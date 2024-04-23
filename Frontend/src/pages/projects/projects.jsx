@@ -8,6 +8,7 @@ import moment from 'moment';
 import { IoIosAdd } from 'react-icons/io';
 import useError from "../../hooks/useError";
 import { GrValidate } from 'react-icons/gr';
+import { NumericFormat } from 'react-number-format';
 
 export default function Projects() {
 
@@ -108,12 +109,23 @@ export default function Projects() {
                                     />
                                 </td>
                                 <td>{project.creationDate == null ? 'Date not specified' :
-                                    moment(project.creationDate).format('DD/MM/YYYY')}</td>
+                                    moment(project.creationDate).format('DD. MM. YYYY.')}</td>
                                 <td>{project.completionDate == null ? 'Date not specified' :
                                     moment(project.completionDate).format('DD/MM/YYYY')}</td>
                                 <td>{project.totalPrintCount == null ? 0 : project.totalPrintCount}</td>
                                 <td>{project.totalPrintTime == null ? 0 : project.totalPrintTime}</td>
-                                <td>{project.totalCost == null ? 0 : project.totalCost}</td>
+                                <td>{project.totalCost == null 
+                                ? 0 
+                                : 
+                                <NumericFormat
+                                value={project.totalCost}
+                                displayType='text'
+                                thousandSeparator='.'
+                                decimalSeparator=','
+                                decimalScale={2}
+                                prefix='€'
+                                fixedDecimalScale
+                                />}</td>
                                 <td>{project.projectDescription}</td>
                                 <td>
                                     <Button
