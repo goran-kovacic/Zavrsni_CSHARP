@@ -8,7 +8,7 @@ export default function Akcije({ odustani, akcija }) {
         <Col>
             <Link 
             className="btn btn-danger"
-            to={odustani}>Odustani</Link>
+            to={odustani}>Cancel</Link>
         </Col>
         <Col>
             <Button

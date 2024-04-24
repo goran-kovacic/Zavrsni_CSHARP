@@ -12,16 +12,16 @@ import InputCheckbox from "../../components/InputCheckbox";
 import Service from "../../services/ProjectService";
 
 
-export default function ProjectsEdit(){
+export default function ProjectsEdit() {
 
     const navigate = useNavigate();
     const routeParams = useParams();
     const [project, setProject] = useState({});
     const { prikaziError } = useError();
 
-    async function dohvatiProject(){
-        const odgovor = await Service.getBySifra('Project',routeParams.id)
-        if(!odgovor.ok){
+    async function dohvatiProject() {
+        const odgovor = await Service.getBySifra('Project', routeParams.id)
+        if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             navigate(RouteNames.PROJECT_VIEW);
             return;
@@ -32,27 +32,27 @@ export default function ProjectsEdit(){
         setProject(project);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         dohvatiProject();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
+    }, []);
 
-    async function promjeniProject(project){
-        const odgovor = await Service.promjeni('Project',routeParams.id,project);
-        if(odgovor.ok){
-          navigate(RouteNames.PROJECT_VIEW);
-          return;
+    async function promjeniProject(project) {
+        const odgovor = await Service.promjeni('Project', routeParams.id, project);
+        if (odgovor.ok) {
+            navigate(RouteNames.PROJECT_VIEW);
+            return;
         }
         prikaziError(odgovor.podaci);
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault();
 
-        const podaci = new FormData(e.target);        
+        const podaci = new FormData(e.target);
 
         const project = {
-            projectName: podaci.get('projectName'),
+            projectName: podaci.get('Project Name'),
             creationDate: podaci.get('creationDate') == "" ? null : podaci.get('creationDate'),
             completionDate: podaci.get('completionDate') == "" ? null : podaci.get('completionDate'),
             isCompleted: podaci.get('isCompleted') == 'on' ? true : false,
@@ -69,7 +69,7 @@ export default function ProjectsEdit(){
         <Container>
             <Form onSubmit={handleSubmit}>
 
-                <InputText atribut="projectName" vrijednost={project.projectName}/>
+                <InputText atribut="Project Name" vrijednost={project.projectName} />
 
                 {/* <Form.Group controlId="projectName">
                     <Form.Label>Project Name</Form.Label>
@@ -82,48 +82,48 @@ export default function ProjectsEdit(){
                 </Form.Group> */}
                 <Form.Group controlId="creationDate">
                     <Form.Label>Creation Date</Form.Label>
-                    <Form.Control 
-                    type="date" 
-                    name="creationDate"
-                    defaultValue={project.creationDate}
+                    <Form.Control
+                        type="date"
+                        name="creationDate"
+                        defaultValue={project.creationDate}
                     />
-                </Form.Group> 
+                </Form.Group>
 
                 <Form.Group controlId="completionDate">
                     <Form.Label>Completion Date</Form.Label>
-                    <Form.Control 
-                    type="date" 
-                    name="completionDate" 
-                    defaultValue={project.completionDate}
+                    <Form.Control
+                        type="date"
+                        name="completionDate"
+                        defaultValue={project.completionDate}
                     />
-            </Form.Group>
+                </Form.Group>
                 <Form.Group controlId="projectDescription">
                     <Form.Label>Project Description</Form.Label>
-                    <Form.Control 
-                    type="text" 
-                    name="projectDescription"
-                    defaultValue={project.projectDescription} />
+                    <Form.Control
+                        type="text"
+                        name="projectDescription"
+                        defaultValue={project.projectDescription} />
                 </Form.Group>
                 <Form.Group controlId="isCompleted">
-                    <Form.Check 
-                    label="Completed" 
-                    name="isCompleted" 
-                    defaultChecked={project.isCompleted}/>
+                    <Form.Check
+                        label="Completed"
+                        name="isCompleted"
+                        defaultChecked={project.isCompleted} />
                 </Form.Group>
                 <hr />
 
-            <Row>
-                <Col>
-                    <Link className="btn btn-danger siroko" to={RouteNames.PROJECT_VIEW}>
-                        Cancel
-                    </Link>
-                </Col>
-                <Col>
-                    <Button className="siroko" variant="primary" type="submit">
-                        Edit
-                    </Button>
-                </Col>
-            </Row>
+                <Row>
+                    <Col>
+                        <Link className="btn btn-danger siroko" to={RouteNames.PROJECT_VIEW}>
+                            Cancel
+                        </Link>
+                    </Col>
+                    <Col>
+                        <Button className="siroko" variant="primary" type="submit">
+                            Edit
+                        </Button>
+                    </Col>
+                </Row>
             </Form>
         </Container>
     );

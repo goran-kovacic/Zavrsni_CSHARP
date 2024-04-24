@@ -9,9 +9,9 @@ namespace PrintApp.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class PrinterController: AppController<Printer, PrinterDTORead, PrinterDTOInsertUpdate>
+    public class PrinterController : AppController<Printer, PrinterDTORead, PrinterDTOInsertUpdate>
     {
-        public PrinterController(PrintAppContext context) : base(context) 
+        public PrinterController(PrintAppContext context) : base(context)
         {
             DbSet = _context.Printers;
             _mapper = new MappingPrinters();
@@ -19,7 +19,7 @@ namespace PrintApp.Controllers
 
         protected override void ControlDelete(Printer entity)
         {
-            if(entity != null && entity.JobsInPrinter!=null && entity.JobsInPrinter.Count() > 0)
+            if (entity != null && entity.JobsInPrinter != null && entity.JobsInPrinter.Count() > 0)
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("Cannot delete because of foreign keys");
@@ -29,7 +29,7 @@ namespace PrintApp.Controllers
 
         protected override List<PrinterDTORead> UcitajSve()
         {
-            var list = _context.Printers                
+            var list = _context.Printers
                 .Include(p => p.JobsInPrinter)
                 .ToList();
             if (list == null || list.Count == 0)
@@ -41,7 +41,7 @@ namespace PrintApp.Controllers
 
         protected override Printer NadiEntitet(int id)
         {
-            return _context.Printers                
+            return _context.Printers
                 .Include(p => p.JobsInPrinter)
                 .FirstOrDefault(x => x.Id == id)
                 ?? throw new Exception("ne postoji printer sa sifrom " + id + " u bazi");
@@ -50,8 +50,31 @@ namespace PrintApp.Controllers
         protected override Printer KreirajEntitet(PrinterDTOInsertUpdate dto)
         {
             var entitet = _mapper.MapInsertUpdatedFromDTO(dto);
-            entitet.JobsInPrinter = new List<PrintJob> ();
+            entitet.JobsInPrinter = new List<PrintJob>();
             return entitet;
+        }
+
+        [HttpPatch]
+        [Route("{id:int}")]
+        public async Task<ActionResult> ResetFep(int id)
+        {
+            var entitet = _context.Printers.Find(id);
+
+            if (entitet == null)
+            {
+                return BadRequest("Ne postoji printer sa sifrom " + id + " u bazi");
+            }
+            entitet.FepCount = 0;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok("Fep counter reset");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }

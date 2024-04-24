@@ -17,10 +17,16 @@ import Printers from './pages/printers/printers'
 import PrintersAdd from './pages/printers/printersAdd'
 import PrintersEdit from './pages/printers/printersEdit'
 
+import ErrorModal from './components/ErrorModal';
+import useError from "./hooks/useError"
+
 function App() {
-  
+
+  const { errors, prikaziErrorModal, sakrijError } = useError();
+
   return (
     <>
+      <ErrorModal show={prikaziErrorModal} errors={errors} onHide={sakrijError} />
       <NavBar />
       <Routes>
         <Route path={RouteNames.HOME} element={<Pocetna />} />
@@ -30,8 +36,8 @@ function App() {
         <Route path={RouteNames.PROJECT_EDIT} element={<ProjectsEdit />} />
 
         <Route path={RouteNames.PRINTER_VIEW} element={<Printers />} />
-        <Route path={RouteNames.PRINTERS_NEW} element={<PrintersAdd />} />
-        <Route path={RouteNames.PRINTERS_EDIT} element={<PrintersEdit />} />
+        <Route path={RouteNames.PRINTER_NEW} element={<PrintersAdd />} />
+        <Route path={RouteNames.PRINTER_EDIT} element={<PrintersEdit />} />
       </Routes>
     </>
   )
