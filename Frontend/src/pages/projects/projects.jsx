@@ -25,14 +25,6 @@ export default function Projects() {
             return;
         }
         setProjects(odgovor.podaci);
-
-        // await ProjectService.get()
-        //     .then((odg) => {
-        //         setProjects(odg);
-        //     })
-        //     .catch((e) => {
-        //         console.log(e);
-        //     });
     }
 
     async function obrisiProject(id) {

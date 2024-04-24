@@ -55,8 +55,4 @@ export default function pritnersEdit(){
             </Form>
         </Container>
     )
-
-
-
-    
 }

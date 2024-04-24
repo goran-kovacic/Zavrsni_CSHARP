@@ -8,6 +8,10 @@ export const RouteNames = {
     PRINTER_NEW: '/printers/add',
     PRINTER_EDIT: '/printers/:id',
 
+    RESIN_VIEW: '/resins',
+    RESIN_NEW: '/resins/add',
+    RESIN_EDIT: '/resins/:id'
+
 
     
 };

@@ -65,7 +65,7 @@ export default function Printers() {
                                 variant="primary"
                                 >
                                     <Fa0
-                                    size={25}
+                                    size={25}                                    
                                     />
                                 </Button>
                             </td>
