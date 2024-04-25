@@ -1,4 +1,12 @@
-import  {get,obrisi,dodaj,getBySifra,promjeni,dohvatiPorukeAlert } from "./HttpService";
+import  {get,obrisi,dodaj,getBySifra,promjeni,dohvatiPorukeAlert, HttpService, obradiUspjeh, obradiGresku, reset} from "./HttpService";
+
+async function resetFep(naziv, id){
+    return await HttpService.reset('/' + naziv + '/' + id).then((res)=>{
+        return obradiUspjeh(res);})
+        .catch((e)=>{
+            return obradiGresku(e);
+        });
+}
 
 export default{
     get,
@@ -6,5 +14,7 @@ export default{
     dodaj,
     promjeni,
     getBySifra,
-    dohvatiPorukeAlert
+    dohvatiPorukeAlert,
+    resetFep,
+    reset
 };

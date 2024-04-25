@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Container, Table } from "react-bootstrap";
 import useError from "../../hooks/useError";
 import { RouteNames } from "../../constants";
@@ -28,6 +28,14 @@ export default function Printers() {
         const odgovor = await Service.obrisi('Printer', id);
         prikaziError(odgovor.podaci);
         if (odgovor.ok) {
+            dohvatiPrinters();
+        }
+    }
+
+    async function resetFep(id){
+        const odgovor = await Service.reset('Printer', id);
+        // prikaziError(odgovor.podaci);
+        if(odgovor.ok){
             dohvatiPrinters();
         }
     }
@@ -65,7 +73,8 @@ export default function Printers() {
                                 variant="primary"
                                 >
                                     <Fa0
-                                    size={25}                                    
+                                    size={25} 
+                                    onClick={resetFep}                                   
                                     />
                                 </Button>
                             </td>

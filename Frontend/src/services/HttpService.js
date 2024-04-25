@@ -31,6 +31,10 @@ export async function obrisi(naziv,sifra) {
     return await HttpService.delete('/' + naziv + '/' + sifra).then((res)=>{return obradiUspjehBrisanje(res);}).catch((e)=>{ return obradiGresku(e);});
 }
 
+export async function reset(naziv,id){
+    return await HttpService.patch('/'+ naziv + '/' + id).then((res)=>{return obradiUspjehBrisanje(res);}).catch((e)=>{ return obradiGresku(e);});
+}
+
 
 
 export function obradiUspjeh(res){

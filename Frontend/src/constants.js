@@ -10,7 +10,11 @@ export const RouteNames = {
 
     RESIN_VIEW: '/resins',
     RESIN_NEW: '/resins/add',
-    RESIN_EDIT: '/resins/:id'
+    RESIN_EDIT: '/resins/:id',
+
+    PART_VIEW: '/parts',
+    PART_NEW: '/parts/add',
+    PART_EDIT: '/parts/:id'
 
 
     

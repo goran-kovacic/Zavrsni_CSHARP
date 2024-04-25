@@ -21,6 +21,9 @@ import Resins from './pages/resins/resins'
 import ResinsAdd from './pages/resins/resinsAdd'
 import ResinsEdit from './pages/resins/resinsEdit'
 
+import Parts from './pages/parts/parts'
+import PartsAdd from './pages/parts/partsAdd'
+import PartsEdit from './pages/parts/partsEdit'
 
 import ErrorModal from './components/ErrorModal';
 import useError from "./hooks/useError"
@@ -47,6 +50,10 @@ function App() {
         <Route path={RouteNames.RESIN_VIEW} element={<Resins />} />
         <Route path={RouteNames.RESIN_NEW} element={<ResinsAdd />} />
         <Route path={RouteNames.RESIN_EDIT} element={<ResinsEdit />} />
+
+        <Route path={RouteNames.PART_VIEW} element={<Parts />} />
+        <Route path={RouteNames.PART_NEW} element={<PartsAdd />} />
+        <Route path={RouteNames.PART_EDIT} element={<PartsEdit />} />
       </Routes>
     </>
   )

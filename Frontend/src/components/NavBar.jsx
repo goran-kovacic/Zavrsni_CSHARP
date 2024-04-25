@@ -29,9 +29,15 @@ export default function NavBar() {
                         >Projects</NavLink>
 
                         <NavLink
-                        onClick={()=> navigate(RouteNames.RESIN_VIEW)}
+                            onClick={() => navigate(RouteNames.PART_VIEW)}
                         >
-                        Resins    
+                            Parts
+                        </NavLink>
+
+                        <NavLink
+                            onClick={() => navigate(RouteNames.RESIN_VIEW)}
+                        >
+                            Resins
                         </NavLink>
 
                         <NavLink
