@@ -17,8 +17,8 @@ namespace PrintApp.Mappers
                     entity.Cost,
                     entity.PrintTime,
                     entity.Project == null ? "" : entity.Project.ProjectName,
-                    entity.FilesInPart.Count,
-                    entity.JobsInPart.Count
+                    entity.FilesInPart == null ? 0 : entity.FilesInPart.Count,
+                    entity.JobsInPart == null ? 0 : entity.JobsInPart.Count
                     ));
             }));
 

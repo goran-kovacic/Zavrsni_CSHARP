@@ -71,10 +71,10 @@ export default function Printers() {
                             <td>{printer.fepCount}
                                 <Button 
                                 variant="primary"
+                                onClick={()=>{resetFep(printer.id)}}
                                 >
                                     <Fa0
-                                    size={25} 
-                                    onClick={resetFep}                                   
+                                    size={25}                        
                                     />
                                 </Button>
                             </td>

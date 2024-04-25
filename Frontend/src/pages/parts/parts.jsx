@@ -6,6 +6,7 @@ import { RouteNames } from "../../constants";
 import { IoIosAdd } from "react-icons/io";
 import Service from "../../services/PartService";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import ProjectService from "../../services/ProjectService";
 
 
 export default function parts() {
@@ -16,10 +17,20 @@ export default function parts() {
     const { prikaziError } = useError();
 
     const [projects, setProjects] = useState([]);
+    const [selectedProject, setSelectedProject] = useState({});
     const [idProject, setIdProject] = useState(0);
 
     async function dohvatiParts() {
         const odgovor = await Service.get('Part');
+        if (!odgovor.ok) {
+            prikaziError(odgovor.podaci);
+            return;
+        }
+        setParts(odgovor.podaci);
+    }
+
+    async function dohvatiPartsWithProject(id) {
+        const odgovor = await Service.getWithProject( id);
         if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             return;
@@ -35,29 +46,25 @@ export default function parts() {
         }
     }
 
+    async function dohvatiProjects() {
+        const odgovor = await ProjectService.get('Project');
+        if (!odgovor.ok) {
+            prikaziError(odgovor.podaci);
+            return;
+        }
+        setProjects(odgovor.podaci);
+    }
+
+
     useEffect(() => {
         dohvatiParts();
+        dohvatiProjects();
     }, []);
 
-    return (
-        <Container>
-            <Link to={RouteNames.PART_NEW} className="btn btn-success siroko">
-                <IoIosAdd
-                    size={25}
-                /> Add New Part
-            </Link>
-
-            <select onChange={setProjects}>
-                <option value="">Select project</option>
-                {projects.map(project => (
-                    <option key={project.id} value={project.id}>
-                        {project.projectName}
-                    </option>
-                ))}
-
-            </select>
 
 
+    const PartsTable = ({ parts }) => {
+        return (
             <Table striped bordered hover responsive>
                 <thead>
                     <tr>
@@ -78,7 +85,6 @@ export default function parts() {
                                     onClick={() => obrisiPart(part.id)}
                                     variant='danger'
                                     size='sm'
-
                                 >
                                     <FaTrash
                                         size={25}
@@ -101,6 +107,48 @@ export default function parts() {
                     ))}
                 </tbody>
             </Table>
+        );
+    };
+
+    const ProjectDropdown = ({ projects, selectedProject }) => {
+
+        return (
+            <select onChange={e => {
+                //setSelectedProject();
+                dohvatiPartsWithProject(e.target.value);
+              }}>
+                <option value="">
+                    select project
+                </option>
+                {projects.map(project => (
+                    <option key={project.id} value={project.id}>
+                        {project.projectName}
+                    </option>
+                ))}
+
+            </select>
+        );
+    };
+
+    const handleSelectProject = event => {
+        const projectId = event.target.value;
+        selectedProject(projectId);
+    }
+
+    return (
+        <Container>
+            <Link to={RouteNames.PART_NEW} className="btn btn-success siroko">
+                <IoIosAdd
+                    size={25}
+                /> Add New Part
+            </Link>
+
+            <ProjectDropdown
+                projects={projects}
+                selectedProject={handleSelectProject}
+            />
+            <PartsTable parts={parts} />
+
         </Container>
     )
 }

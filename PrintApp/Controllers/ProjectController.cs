@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrintApp.Data;
+using PrintApp.Mappers;
 using PrintApp.Models;
 using System.Text;
 
@@ -31,6 +32,32 @@ namespace PrintApp.Controllers
                     sb.Append(e.PartName).Append(", ");
                 }
                 throw new Exception(sb.ToString()[..^2]);
+            }
+        }
+
+
+        [HttpGet]
+        [Route("Part/{projectId:int}")]
+        public IActionResult GetParts(int projectId)
+        {
+            if (!ModelState.IsValid || projectId <= 0)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var parts = _context.Parts
+                    .Include(i => i.Project).Where(x => x.Project.Id == projectId).ToList();
+                if(parts == null)
+                {
+                    return BadRequest("Parts list is null");
+                }
+                var mp = new MappingParts();
+                return new JsonResult(mp.MapReadList(parts));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }
