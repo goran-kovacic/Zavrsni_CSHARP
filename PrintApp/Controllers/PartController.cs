@@ -55,8 +55,8 @@ namespace PrintApp.Controllers
 
         protected override Part PromjeniEntitet(PartDTOInsertUpdate dto, Part entity)
         {
-            var project = _context.Projects.Find(dto.ProjectId)
-                ?? throw new Exception("Ne postoji project sa šifrom " + dto.ProjectId + " u bazi");
+            var project = _context.Projects.Find(dto.IdProject)
+                ?? throw new Exception("Ne postoji project sa šifrom " + dto.IdProject + " u bazi");
 
             entity.PartName = dto.PartName;
             entity.Project = project;
@@ -65,15 +65,13 @@ namespace PrintApp.Controllers
         }
 
         protected override Part KreirajEntitet(PartDTOInsertUpdate dto)
-        {
+        {            
+            var project = _context.Projects.Find(dto.IdProject)
+              ?? throw new Exception("Ne postoji project sa šifrom " + dto.IdProject + " u bazi");            
+
             var entity = _mapper.MapInsertUpdatedFromDTO(dto);
-            if (entity.Project != null)
-            {
-                var project = _context.Projects.Find(dto.ProjectId)
-                ?? throw new Exception("Ne postoji project sa šifrom " + dto.ProjectId + " u bazi");
-                entity.Project = project;
-            }
-            
+
+            entity.Project = project;
             entity.FilesInPart = new List<PrintFile>();
             entity.JobsInPart = new List<PrintJob>();
 

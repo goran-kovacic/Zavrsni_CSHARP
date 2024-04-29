@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useError from "../../hooks/useError";
-import { Button, ButtonGroup, Container, Dropdown, DropdownButton, Table } from "react-bootstrap";
+import { Button, ButtonGroup, Container, Dropdown, DropdownButton, Form, Table } from "react-bootstrap";
 import { RouteNames } from "../../constants";
 import { IoIosAdd } from "react-icons/io";
 import Service from "../../services/PartService";
@@ -113,20 +113,18 @@ export default function parts() {
     const ProjectDropdown = ({ projects, selectedProject }) => {
 
         return (
-            <select onChange={e => {
-                //setSelectedProject();
+            <Form.Select onChange={e => {
                 dohvatiPartsWithProject(e.target.value);
               }}>
-                <option value="">
-                    select project
-                </option>
+                <option>Select project</option>
+                
                 {projects.map(project => (
                     <option key={project.id} value={project.id}>
                         {project.projectName}
                     </option>
                 ))}
 
-            </select>
+            </Form.Select>
         );
     };
 

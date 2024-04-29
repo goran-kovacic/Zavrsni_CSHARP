@@ -92,7 +92,7 @@ namespace PrintApp.Models
         [Required(ErrorMessage ="{0} required")]
         [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
         string PartName,
-        int? ProjectId
+        int? IdProject
         );
 
     public record FileDTORead(
