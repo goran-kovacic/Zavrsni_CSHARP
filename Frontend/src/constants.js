@@ -14,7 +14,11 @@ export const RouteNames = {
 
     PART_VIEW: '/parts',
     PART_NEW: '/parts/add',
-    PART_EDIT: '/parts/:id'
+    PART_EDIT: '/parts/:id',
+
+    JOB_VIEW: '/jobs',
+    JOB_NEW: '/jobs/add',
+    JOB_EDIT: '/jobs/:id'
 
 
     

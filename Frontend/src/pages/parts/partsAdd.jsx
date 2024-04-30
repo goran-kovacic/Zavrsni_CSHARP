@@ -52,6 +52,7 @@ export default function partsAdd() {
     function handleSubmit(e) {
         e.preventDefault();
         const podaci = new FormData(e.target);
+
         dodaj({
             partName: podaci.get('Part Name'),
             idProject: parseInt(sifraProject)
@@ -67,7 +68,7 @@ export default function partsAdd() {
                 <FormGroup className="mb-3" controlId="project">
                     <FormLabel>Project</FormLabel>
                     <Form.Select onChange={(e) => { setSifraProject(e.target.value) }}>
-                        <option value="option1">Select Project</option>
+                        <option>Select Project</option>
                         
                         {project && project.map((s, index) => (
                             <option key={index} value={s.id}>
@@ -79,8 +80,6 @@ export default function partsAdd() {
                 </FormGroup>
 
                 <Akcije odustani={RouteNames.PART_VIEW} akcija='Add Part' /> 
-
-
             </Form>
         </Container>
     )

@@ -8,15 +8,15 @@ import InputText from "../../components/InputText";
 import Akcije from "../../components/Akcije";
 
 
-export default function pritnersEdit(){
+export default function pritnersEdit() {
     const navigate = useNavigate();
     const routeParams = useParams();
     const [printer, setPrinter] = useState({});
-    const {prikaziError} = useError();
+    const { prikaziError } = useError();
 
-    async function dohvatiPrinter(){
+    async function dohvatiPrinter() {
         const odgovor = await Service.getBySifra('Printer', routeParams.id)
-        if(!odgovor.ok){
+        if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             navigate(RouteNames.PRINTER_VIEW);
             return;
@@ -24,34 +24,37 @@ export default function pritnersEdit(){
         setPrinter(odgovor.podaci);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         dohvatiPrinter();
-    },[]);
+    }, []);
 
-    async function promjeniPrinter(printer){
-        const odgovor = await Service.promjeni('Printer', routeParams.id,printer);
-        if(odgovor.ok){
+    async function promjeniPrinter(printer) {
+        const odgovor = await Service.promjeni('Printer', routeParams.id, printer);
+        if (odgovor.ok) {
             navigate(RouteNames.PRINTER_VIEW);
             return;
         }
         prikaziError(odgovor.podaci);
     }
 
-    function handleSubmit(e){
+    function handleSubmit(e) {
         e.preventDefault();
         const podaci = new FormData(e.target);
         promjeniPrinter({
             printerName: podaci.get('Printer Name'),
-            manufacturer: podaci.get('Manufacturer')
+            manufacturer: podaci.get('Manufacturer'),
+            printerTime: printer.printerTime,
+            fepCount: printer.fepCount
         });
     }
 
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                <InputText atribut="Printer Name" vrijednost={printer.printerName}/>
-                <InputText atribut="Manufacturer" vrijednost={printer.manufacturer}/>
-                <Akcije odustani={RouteNames.PRINTER_VIEW} akcija="Edit Printer"/>
+                <InputText atribut="Printer Name" vrijednost={printer.printerName} />
+                <InputText atribut="Manufacturer" vrijednost={printer.manufacturer} />
+                
+                <Akcije odustani={RouteNames.PRINTER_VIEW} akcija="Edit Printer" />
             </Form>
         </Container>
     )

@@ -25,8 +25,14 @@ import Parts from './pages/parts/parts'
 import PartsAdd from './pages/parts/partsAdd'
 import PartsEdit from './pages/parts/partsEdit'
 
+import Jobs from './pages/jobs/jobs'
+import JobsAdd from './pages/jobs/jobsAdd'
+import JobsEdit from './pages/jobs/jobsEdit'
+
 import ErrorModal from './components/ErrorModal';
 import useError from "./hooks/useError"
+import LoadingSpinner from './components/LoadingSpinner'
+
 
 function App() {
 
@@ -35,6 +41,7 @@ function App() {
   return (
     <>
       <ErrorModal show={prikaziErrorModal} errors={errors} onHide={sakrijError} />
+      <LoadingSpinner />
       <NavBar />
       <Routes>
         <Route path={RouteNames.HOME} element={<Pocetna />} />
@@ -54,6 +61,10 @@ function App() {
         <Route path={RouteNames.PART_VIEW} element={<Parts />} />
         <Route path={RouteNames.PART_NEW} element={<PartsAdd />} />
         <Route path={RouteNames.PART_EDIT} element={<PartsEdit />} />
+
+        <Route path={RouteNames.JOB_VIEW} element={<Jobs />} />
+        <Route path={RouteNames.JOB_NEW} element={<JobsAdd />} />
+        <Route path={RouteNames.JOB_EDIT} element={<JobsEdit />} />
       </Routes>
     </>
   )

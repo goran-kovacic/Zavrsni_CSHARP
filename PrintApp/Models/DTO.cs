@@ -130,7 +130,9 @@ namespace PrintApp.Models
         string? PrinterName,
         [Required(ErrorMessage ="{0} required")]
         [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
-        string? Manufacturer        
+        string? Manufacturer,  
+        int? PrinterTime,
+        int? FepCount
         );
 
     public record MaterialDTORead(

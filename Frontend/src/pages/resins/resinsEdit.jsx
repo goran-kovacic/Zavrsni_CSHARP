@@ -43,17 +43,17 @@ export default function resinsEdit() {
         promjeniResin({
             materialName: podaci.get('Name'),
             manufacturer: podaci.get('Manufacturer'),
-            costPerUnit: podaci.get('Cost Per Unit'),
-            layerHeight: podaci.get('Layer Height'),
-            liftDistance: podaci.get('Lift Distance'),
-            liftSpeed: podaci.get('Lift Speed'),
-            lightOffDelay: podaci.get('Light Off Delay'),
-            retractSpeed: podaci.get('Retract Speed'),
-            calibratedExposure: podaci.get('Calibrated Exposure'),
-            bottomExposure: podaci.get('Bottom Exposure'),
-            bottomLiftSpeed: podaci.get('Bottom Lift Speed'),
-            bottomLiftDistance: podaci.get('Bottom Lift Distance'),
-            bottomRetractSpeed: podaci.get('Bottom Retract Speed')
+            costPerUnit: podaci.get('Cost (€/L)'),
+            layerHeight: podaci.get('Layer Height (µm)'),
+            liftDistance: podaci.get('Lift Distance (mm)'),
+            liftSpeed: podaci.get('Lift Speed (mm/s)'),
+            lightOffDelay: podaci.get('Light off Delay (s)'),
+            retractSpeed: podaci.get('Retract Speed (mm/s)'),
+            calibratedExposure: podaci.get('Exposure (s)'),
+            bottomExposure: podaci.get('Bottom Exposure (s)'),
+            bottomLiftSpeed: podaci.get('Bottom lift Speed (mm/s)'),
+            bottomLiftDistance: podaci.get('Bottom lift Distance (mm)'),
+            bottomRetractSpeed: podaci.get('Bottom retract speed (mm/s)')
         });
     }
 
@@ -62,17 +62,17 @@ export default function resinsEdit() {
             <Form onSubmit={handleSubmit}>
                 <InputText atribut="Name" vrijednost={materials.materialName} />
                 <InputText atribut="Manufacturer" vrijednost={materials.manufacturer} />
-                <InputText atribut="Cost Per Unit" vrijednost={materials.costPerUnit} />
-                <InputText atribut="Layer Height" vrijednost={materials.layerHeight} />
-                <InputText atribut="Lift Distance" vrijednost={materials.liftDistance} />
-                <InputText atribut="Lift Speed" vrijednost={materials.liftSpeed} />
-                <InputText atribut="Light Off Delay" vrijednost={materials.lightOffDelay} />
-                <InputText atribut="Retract Speed" vrijednost={materials.retractSpeed} />
-                <InputText atribut="Calibrated Exposure" vrijednost={materials.calibratedExposure} />
-                <InputText atribut="Bottom Exposure" vrijednost={materials.bottomExposure} />
-                <InputText atribut="Bottom Lift Speed" vrijednost={materials.bottomLiftSpeed} />
-                <InputText atribut="Bottom Lift Distance" vrijednost={materials.bottomLiftDistance} />
-                <InputText atribut="Bottom Retract Speed" vrijednost={materials.bottomRetractSpeed} />
+                <InputText atribut="Cost (€/L)" vrijednost={materials.costPerUnit} />
+                <InputText atribut="Layer Height (µm)" vrijednost={materials.layerHeight} />
+                <InputText atribut="Lift Distance (mm)" vrijednost={materials.liftDistance} />
+                <InputText atribut="Lift Speed (mm/s)" vrijednost={materials.liftSpeed} />
+                <InputText atribut="Light off Delay (s)" vrijednost={materials.lightOffDelay} />
+                <InputText atribut="Retract Speed (mm/s)" vrijednost={materials.retractSpeed} />
+                <InputText atribut="Exposure (s)" vrijednost={materials.calibratedExposure} />
+                <InputText atribut="Bottom Exposure (s)" vrijednost={materials.bottomExposure} />
+                <InputText atribut="Bottom lift Speed (mm/s)" vrijednost={materials.bottomLiftSpeed} />
+                <InputText atribut="Bottom lift Distance (mm)" vrijednost={materials.bottomLiftDistance} />
+                <InputText atribut="Bottom retract speed (mm/s)" vrijednost={materials.bottomRetractSpeed} />
                 <Akcije odustani={RouteNames.RESIN_VIEW} akcija="Edit Resin"/>
             </Form>
         </Container>

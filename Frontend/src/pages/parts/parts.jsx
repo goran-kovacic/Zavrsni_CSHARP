@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useError from "../../hooks/useError";
-import { Button, ButtonGroup, Container, Dropdown, DropdownButton, Form, Table } from "react-bootstrap";
+import { Button, ButtonGroup, Container, Dropdown, DropdownButton, Form, FormGroup, Table } from "react-bootstrap";
 import { RouteNames } from "../../constants";
 import { IoIosAdd } from "react-icons/io";
 import Service from "../../services/PartService";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import ProjectService from "../../services/ProjectService";
+import useLoading from "../../hooks/useLoading";
+
 
 
 export default function parts() {
 
     const [parts, setParts] = useState();
     const navigate = useNavigate();
-    const routeParams = useParams();
     const { prikaziError } = useError();
+    const { showLoading, hideLoading } = useLoading();
+
 
     const [projects, setProjects] = useState([]);
-    const [selectedProject, setSelectedProject] = useState({});
+    const [selectedProject, setSelectedProject] = useState([]);
     const [idProject, setIdProject] = useState(0);
 
     async function dohvatiParts() {
@@ -30,7 +33,7 @@ export default function parts() {
     }
 
     async function dohvatiPartsWithProject(id) {
-        const odgovor = await Service.getWithProject( id);
+        const odgovor = await Service.getWithProject(id);
         if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             return;
@@ -47,7 +50,11 @@ export default function parts() {
     }
 
     async function dohvatiProjects() {
+        showLoading();
+
         const odgovor = await ProjectService.get('Project');
+        hideLoading();
+
         if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             return;
@@ -110,21 +117,25 @@ export default function parts() {
         );
     };
 
-    const ProjectDropdown = ({ projects, selectedProject }) => {
+    const ProjectDropdown = ({ projects, setProjects }) => {
 
         return (
-            <Form.Select onChange={e => {
-                dohvatiPartsWithProject(e.target.value);
-              }}>
-                <option>Select project</option>
-                
-                {projects.map(project => (
-                    <option key={project.id} value={project.id}>
-                        {project.projectName}
-                    </option>
-                ))}
+            <FormGroup className="mb-3" controlId="project">
+                <Form.Select 
+                value={idProject}
+                onChange={e => {
+                    dohvatiPartsWithProject(e.target.value);
+                }}>
+                    <option>Select project</option>
 
-            </Form.Select>
+                    {projects.map((project, index ) => (
+                        <option key={index} value={project.id}>
+                            {project.projectName}
+                        </option>
+                    ))}
+
+                </Form.Select>
+            </FormGroup>
         );
     };
 
@@ -143,7 +154,7 @@ export default function parts() {
 
             <ProjectDropdown
                 projects={projects}
-                selectedProject={handleSelectProject}
+                // selectedProject={handleSelectProject}
             />
             <PartsTable parts={parts} />
 

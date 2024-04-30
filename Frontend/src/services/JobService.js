@@ -10,8 +10,8 @@ import {
     obradiGresku
 } from "./HttpService";
 
-async function getWithProject(id) {
-    return await HttpService.get('/Project/Part/' + id).then((res) => {
+async function getWithPart(id){
+    return await HttpService.get('/Part/Job' + id).then((res) => {
         return obradiUspjeh(res);
     })
         .catch((e) => {
@@ -26,5 +26,5 @@ export default {
     promjeni,
     getBySifra,
     dohvatiPorukeAlert,
-    getWithProject
+    getWithPart
 };

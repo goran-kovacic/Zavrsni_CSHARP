@@ -25,7 +25,9 @@ export default function printersAdd(){
         const podaci = new FormData(e.target);
         dodajPrinter({
             printerName: podaci.get('Printer Name'),
-            manufacturer: podaci.get('Manufacturer')
+            manufacturer: podaci.get('Manufacturer'),
+            printerTime: 0,
+            fepCount: 0
         });
     }
 

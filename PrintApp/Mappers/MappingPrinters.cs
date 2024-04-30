@@ -32,7 +32,9 @@ namespace PrintApp.Mappers
                 .ConstructUsing(entity =>
                 new PrinterDTOInsertUpdate(
                     entity.PrinterName,
-                    entity.Manufacturer
+                    entity.Manufacturer,
+                    entity.PrinterTime == null ? 0 : entity.PrinterTime,
+                    entity.FepCount == null ? 0 : entity.FepCount
                     ));
             }));
         }

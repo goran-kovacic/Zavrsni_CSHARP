@@ -66,8 +66,10 @@ namespace PrintApp.Controllers
 
         protected override Part KreirajEntitet(PartDTOInsertUpdate dto)
         {            
-            var project = _context.Projects.Find(dto.IdProject)
-              ?? throw new Exception("Ne postoji project sa šifrom " + dto.IdProject + " u bazi");            
+            //var project = _context.Projects.Find(dto.IdProject)
+            //  ?? throw new Exception("Ne postoji project sa šifrom " + dto.IdProject + " u bazi");
+
+            var project = _context.Projects.Find(dto.IdProject) ?? null;
 
             var entity = _mapper.MapInsertUpdatedFromDTO(dto);
 
@@ -76,6 +78,31 @@ namespace PrintApp.Controllers
             entity.JobsInPart = new List<PrintJob>();
 
             return entity;
+        }
+
+        [HttpGet]
+        [Route("Job/{partId:int}")]
+        public IActionResult GetJobs(int partId)
+        {
+            if (!ModelState.IsValid || partId <= 0)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var jobs = _context.PrintJobs
+                    .Include(i => i.Part).Where(x => x.Part.Id == partId).ToList();
+                if (jobs == null)
+                {
+                    return BadRequest("Parts list is null");
+                }
+                var mp = new MappingJobs();
+                return new JsonResult(mp.MapReadList(jobs));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

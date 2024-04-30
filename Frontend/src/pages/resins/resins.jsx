@@ -49,16 +49,16 @@ export default function Resins() {
                         <th>Name</th>
                         <th>Manufacturer</th>
                         <th>Cost</th>
-                        <th>Layer Height</th>
-                        <th>Lift Distance</th>
-                        <th>Lift Speed</th>
-                        <th>Light off Delay</th>
-                        <th>Retract Speed</th>
-                        <th>Exposure</th>
-                        <th>Bottom Exposure</th>
-                        <th>Bottom lift Speed</th>
-                        <th>Bottom lift Distance</th>
-                        <th>Bottom retract speed</th>
+                        <th>Layer Height (µm)</th>
+                        <th>Lift Distance (mm)</th>
+                        <th>Lift Speed (mm/s)</th>
+                        <th>Light off Delay (s)</th>
+                        <th>Retract Speed (mm/s)</th>
+                        <th>Exposure (s)</th>
+                        <th>Bottom Exposure (s)</th>
+                        <th>Bottom lift Speed (mm/s)</th>
+                        <th>Bottom lift Distance (mm)</th>
+                        <th>Bottom retract speed (mm/s)</th>
                         <th>Edit/Delete</th>
 
                     </tr>

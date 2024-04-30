@@ -10,16 +10,20 @@ import { GrValidate } from 'react-icons/gr';
 import { NumericFormat } from 'react-number-format';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { BsSticky, BsStickyFill } from 'react-icons/bs';
-import { CiStickyNote } from 'react-icons/ci';
+import useLoading from "../../hooks/useLoading";
 
 export default function Projects() {
 
     const [projects, setProjects] = useState();
     const navigate = useNavigate();
     const { prikaziError } = useError();
+    const { showLoading, hideLoading } = useLoading();
+
 
     async function dohvatiProjects() {
+        showLoading();
         const odgovor = await Service.get('Project');
+        hideLoading();
         if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             return;
@@ -28,7 +32,9 @@ export default function Projects() {
     }
 
     async function obrisiProject(id) {
+        showLoading();
         const odgovor = await Service.obrisi('Project', id);
+        hideLoading();
         prikaziError(odgovor.podaci);
         if (odgovor.ok) {
             dohvatiProjects();
@@ -66,8 +72,8 @@ export default function Projects() {
                         <th>Creation Date</th>
                         <th>Completion Date</th>
                         <th>Print Count</th>
-                        <th>Print Time</th>
-                        <th>Cost</th>
+                        <th>Print Time (hours)</th>
+                        <th>Cost (€)</th>
                         <th>Description</th>
                         <th>Edit/Delete</th>
                     </tr>
@@ -89,7 +95,7 @@ export default function Projects() {
                                 />
                             </td>
                             <td>{project.creationDate == null ? 'Date not specified' :
-                                moment(project.creationDate).format('DD. MM. YYYY.')}</td>
+                                moment(project.creationDate).format('DD/MM/YYYY')}</td>
                             <td>{project.completionDate == null ? 'Date not specified' :
                                 moment(project.completionDate).format('DD/MM/YYYY')}</td>
                             <td>{project.totalPrintCount == null ? 0 : project.totalPrintCount}</td>

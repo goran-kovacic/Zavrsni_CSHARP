@@ -5,7 +5,7 @@ import useError from "../../hooks/useError";
 import { RouteNames } from "../../constants";
 import { IoIosAdd } from "react-icons/io";
 import Service from "../../services/PrinterService";
-import { FaAdjust, FaEdit, FaTrash } from "react-icons/fa";
+import { FaAccusoft, FaAdjust, FaEdit, FaTrash } from "react-icons/fa";
 import { Fa0 } from "react-icons/fa6";
 
 
@@ -57,7 +57,7 @@ export default function Printers() {
                     <tr>
                         <th>Printer Name</th>
                         <th>Manufacturer</th>
-                        <th>Printer Time</th>
+                        <th>Printer Time (hours)</th>
                         <th>Current FEP Count</th>
                         <th>Edit/Delete</th>
                     </tr>
@@ -69,13 +69,15 @@ export default function Printers() {
                             <td>{printer.manufacturer}</td>
                             <td>{printer.printerTime}</td>
                             <td>{printer.fepCount}
+                            &nbsp;&nbsp;&nbsp;&nbsp;
                                 <Button 
                                 variant="primary"
                                 onClick={()=>{resetFep(printer.id)}}
                                 >
-                                    <Fa0
+                                    <FaAccusoft
                                     size={25}                        
                                     />
+                                    Reset FEP Counter
                                 </Button>
                             </td>
                             <td className="sredina">
@@ -86,6 +88,7 @@ export default function Printers() {
                                     <FaEdit
                                     size={25}
                                     />
+                                    Edit
                                 </Button>
 
                                 <Button
@@ -95,6 +98,7 @@ export default function Printers() {
                                     <FaTrash  
                                     size={25}
                                     />
+                                    Delete
                                 </Button>
                             </td>
                         </tr>
