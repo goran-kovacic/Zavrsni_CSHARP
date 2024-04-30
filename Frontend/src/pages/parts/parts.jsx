@@ -39,6 +39,7 @@ export default function parts() {
             return;
         }
         setParts(odgovor.podaci);
+        setIdProject(id);
     }
 
     async function obrisiPart(id) {
@@ -121,12 +122,13 @@ export default function parts() {
 
         return (
             <FormGroup className="mb-3" controlId="project">
+                <Form.Label>Select a Project:</Form.Label>
                 <Form.Select 
                 value={idProject}
                 onChange={e => {
                     dohvatiPartsWithProject(e.target.value);
                 }}>
-                    <option>Select project</option>
+                    {/* <option>Select project</option> */}
 
                     {projects.map((project, index ) => (
                         <option key={index} value={project.id}>
