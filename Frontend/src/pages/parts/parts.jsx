@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useError from "../../hooks/useError";
-import { Button, ButtonGroup, Container, Dropdown, DropdownButton, Form, FormGroup, Table } from "react-bootstrap";
+import { Button, Container, Form, FormGroup, Table } from "react-bootstrap";
 import { RouteNames } from "../../constants";
 import { IoIosAdd } from "react-icons/io";
 import Service from "../../services/PartService";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import ProjectService from "../../services/ProjectService";
 import useLoading from "../../hooks/useLoading";
-
 
 
 export default function parts() {
@@ -18,13 +17,13 @@ export default function parts() {
     const { prikaziError } = useError();
     const { showLoading, hideLoading } = useLoading();
 
-
     const [projects, setProjects] = useState([]);
-    const [selectedProject, setSelectedProject] = useState([]);
     const [idProject, setIdProject] = useState(0);
 
     async function dohvatiParts() {
+        showLoading();
         const odgovor = await Service.get('Part');
+        hideLoading();
         if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             return;
@@ -39,6 +38,7 @@ export default function parts() {
             return;
         }
         setParts(odgovor.podaci);
+        console.log(odgovor.podaci);
         setIdProject(id);
     }
 
@@ -52,10 +52,8 @@ export default function parts() {
 
     async function dohvatiProjects() {
         showLoading();
-
         const odgovor = await ProjectService.get('Project');
         hideLoading();
-
         if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             return;
@@ -141,10 +139,10 @@ export default function parts() {
         );
     };
 
-    const handleSelectProject = event => {
-        const projectId = event.target.value;
-        selectedProject(projectId);
-    }
+    // const handleSelectProject = event => {
+    //     const projectId = event.target.value;
+    //     selectedProject(projectId);
+    // }
 
     return (
         <Container>

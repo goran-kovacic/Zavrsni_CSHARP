@@ -35,6 +35,12 @@ export default function NavBar() {
                         </NavLink>
 
                         <NavLink
+                            onClick={() => navigate(RouteNames.JOB_VIEW)}
+                        >
+                            Print Jobs
+                        </NavLink>
+
+                        <NavLink
                             onClick={() => navigate(RouteNames.RESIN_VIEW)}
                         >
                             Resins

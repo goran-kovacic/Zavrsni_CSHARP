@@ -11,7 +11,7 @@ import {
 } from "./HttpService";
 
 async function getWithPart(id){
-    return await HttpService.get('/Part/Job' + id).then((res) => {
+    return await HttpService.get('/Part/Job/' + id).then((res) => {
         return obradiUspjeh(res);
     })
         .catch((e) => {

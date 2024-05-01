@@ -91,7 +91,14 @@ namespace PrintApp.Controllers
             try
             {
                 var jobs = _context.PrintJobs
-                    .Include(i => i.Part).Where(x => x.Part.Id == partId).ToList();
+                    .Include(i => i.Part)
+                    .Include(i => i.Material)
+                    .Include(i => i.Printer)
+                    .Where(x => x.Part.Id == partId).ToList();
+
+
+                    
+                    //.Include(i => i.Material).Where(x => x.Material.Id == partId).ToList();
                 if (jobs == null)
                 {
                     return BadRequest("Parts list is null");
