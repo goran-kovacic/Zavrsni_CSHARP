@@ -34,7 +34,10 @@ namespace PrintApp.Mappers
                 .ConstructUsing(entity =>
                 new PartDTOInsertUpdate(
                     entity.PartName,
-                    entity.Project == null ? null : entity.Project.Id
+                    entity.Project == null ? null : entity.Project.Id,
+                    entity.PrintCount == null ? null : entity.PrintCount.Value,
+                    entity.PrintTime == null ? null : entity.PrintTime.Value,
+                    entity.Cost == null ? null : entity.Cost.Value
                     ));
             }));
         }

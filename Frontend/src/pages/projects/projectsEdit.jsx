@@ -51,15 +51,16 @@ export default function ProjectsEdit() {
 
         const podaci = new FormData(e.target);
 
-        const project = {
+        promjeniProject({
             projectName: podaci.get('Project Name'),
             creationDate: podaci.get('creationDate') == "" ? null : podaci.get('creationDate'),
             completionDate: podaci.get('completionDate') == "" ? null : podaci.get('completionDate'),
             isCompleted: podaci.get('isCompleted') == 'on' ? true : false,
-            projectDescription: podaci.get('projectDescription')
-        };
-
-        promjeniProject(project);
+            projectDescription: podaci.get('projectDescription'),
+            totalPrintTime: project.totalPrintTime,
+            totalPrintCount: project.totalPrintCount,
+            totalCost: project.totalCost
+        });
     }
 
     const [startDate, setStartDate] = useState(new Date().toISOString().substr(0, 10));

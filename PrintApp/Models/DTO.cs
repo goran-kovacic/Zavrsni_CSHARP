@@ -30,6 +30,9 @@ namespace PrintApp.Models
         [DataType(DataType.Date)]
         public DateTime? CompletionDate { get; set; }
         public bool? IsCompleted { get; set; }
+        public int? TotalPrintTime { get; set; }
+        public int? TotalPrintCount { get; set; }
+        public decimal? TotalCost { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -93,7 +96,10 @@ namespace PrintApp.Models
         [Required(ErrorMessage ="{0} required")]
         [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
         string PartName,
-        int? IdProject
+        int? IdProject,
+        int? PrintCount,
+        int? PrintTime,
+        decimal? Cost
         );
 
     public record FileDTORead(

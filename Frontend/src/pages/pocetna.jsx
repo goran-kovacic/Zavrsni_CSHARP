@@ -7,6 +7,8 @@ import HighchartsReact from 'highcharts-react-official';
 import Highcharts, { chart } from 'highcharts';
 import HighchartsExporting from 'highcharts/modules/exporting';
 import variwide from 'highcharts/modules/variwide';
+import PieChart from 'highcharts-react-official';
+
 
 
 
@@ -31,7 +33,7 @@ export default function Pocetna() {
             return {
                 
                 name: project.projectName,
-                z: project.totalCost,
+                y: project.totalCost,
             };
         }));
         hideLoading();
@@ -46,7 +48,7 @@ export default function Pocetna() {
         <Container className='mt-4'>
             {podaci.length > 0 && (
                 
-                <HighchartsReact
+                <PieChart
                     highcharts={Highcharts}
                     options={{
                         ...fixedOptions,
@@ -54,7 +56,8 @@ export default function Pocetna() {
                             {
                               name: 'Cost',
                               colorByPoint: true,
-                              data: podaci,
+                              data: podaci
+                              
                             },
                           ],
                     }}
@@ -66,13 +69,26 @@ export default function Pocetna() {
 
 const fixedOptions = {
     chart: {
-        type: 'variwide'
-    },
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie',
+      },
     title: {
-        text: 'Project Expenses'
+        text: 'Project Expenses' 
     },
-    xAxis: {
-        type: 'category'
+    tooltip: {
+        valuePrefix: '€'
     },
+    plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+          },
+        },
+      },
 
 };

@@ -76,7 +76,10 @@ export default function partsEdit() {
 
         promjeni({
             partName: podaci.get('Part Name'),
-            idProject: parseInt(sifraProject)
+            idProject: parseInt(sifraProject),
+            printCount: part.printCount,
+            printTime: part.printTime,
+            cost: part.cost
         });
     }
 
