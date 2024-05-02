@@ -43,7 +43,7 @@ namespace PrintApp.Models
             }else if(CreationDate==null || CompletionDate==null){
                 yield return ValidationResult.Success;
             }
-            else  if(CompletionDate.Value <= CreationDate.Value)
+            else  if(CompletionDate.Value < CreationDate.Value)
             {
                 yield return new ValidationResult("end date must be greater than start date");
             }
