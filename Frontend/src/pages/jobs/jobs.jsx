@@ -44,7 +44,9 @@ export default function jobs(){
     }
 
     async function obrisiJob(id){
+        showLoading();
         const odgovor = await Service.obrisi('Job', id);
+        hideLoading();
         prikaziError(odgovor.podaci);
         if(odgovor.ok){
             dohvatiJobs();

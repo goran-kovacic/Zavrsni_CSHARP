@@ -7,16 +7,19 @@ import { IoIosAdd } from "react-icons/io";
 import Service from "../../services/PrinterService";
 import { FaAccusoft, FaAdjust, FaEdit, FaTrash } from "react-icons/fa";
 import { Fa0 } from "react-icons/fa6";
-
+import useLoading from "../../hooks/useLoading";
 
 export default function Printers() {
 
     const [printers, setPrinters] = useState();
     const navigate = useNavigate();
     const { prikaziError } = useError();
+    const { showLoading, hideLoading } = useLoading();
 
     async function dohvatiPrinters() {
+        showLoading();
         const odgovor = await Service.get('Printer');
+        hideLoading();
         if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             return;
@@ -25,7 +28,9 @@ export default function Printers() {
     }
 
     async function obrisiPrinter(id) {
+        showLoading();
         const odgovor = await Service.obrisi('Printer', id);
+        hideLoading();
         prikaziError(odgovor.podaci);
         if (odgovor.ok) {
             dohvatiPrinters();

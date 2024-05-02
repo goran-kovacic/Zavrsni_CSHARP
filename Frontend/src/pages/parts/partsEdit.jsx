@@ -25,7 +25,9 @@ export default function partsEdit() {
 
 
     async function dohvatiPart() {
+        showLoading();
         const odgovor = await Service.getBySifra('Part', routeParams.id);
+        hideLoading();
         if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             return;

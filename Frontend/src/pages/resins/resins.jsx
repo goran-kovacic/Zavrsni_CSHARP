@@ -7,16 +7,18 @@ import { RouteNames } from "../../constants";
 import { IoIosAdd } from "react-icons/io";
 import { NumericFormat } from "react-number-format";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
-
+import useLoading from "../../hooks/useLoading";
 
 export default function Resins() {
     const [materials, setResins] = useState();
     const navigate = useNavigate();
     const { prikaziError } = useError();
+    const { showLoading, hideLoading } = useLoading();
 
     async function dohvatiResin() {
+        showLoading();
         const odgovor = await Service.get('Material')
+        hideLoading();
         if (!odgovor.ok) {
             prikaziError(odgovor.podaci);
             return;

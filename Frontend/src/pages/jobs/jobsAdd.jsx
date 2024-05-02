@@ -25,7 +25,9 @@ export default function jobsAdd(){
     const {showLoading, hideLoading} = useLoading();
 
     async function dohvatiParts(){
+        showLoading();
         const odgovor = await Service.get('Part');
+        hideLoading();
         if(!odgovor.ok){
             prikaziError(odgovor.podaci);
             return;

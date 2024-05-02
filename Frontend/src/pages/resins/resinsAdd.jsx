@@ -6,14 +6,19 @@ import { dodaj } from "../../services/HttpService";
 import { Container, Form } from "react-bootstrap";
 import InputText from "../../components/InputText";
 import Akcije from "../../components/Akcije";
+import useLoading from "../../hooks/useLoading";
 
 
 export default function ResinsAdd() {
     const navigate = useNavigate();
     const { prikaziError } = useError();
+    const { showLoading, hideLoading } = useLoading();
+
 
     async function dodajResin(resin) {
+        showLoading();
         const odgovor = await Service.dodaj('Material', resin);
+        hideLoading();
         if (odgovor.ok) {
             navigate(RouteNames.RESIN_VIEW);
             return;

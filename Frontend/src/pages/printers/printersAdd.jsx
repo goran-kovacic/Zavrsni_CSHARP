@@ -5,14 +5,19 @@ import { RouteNames } from "../../constants";
 import { Container, Form } from "react-bootstrap";
 import InputText from "../../components/InputText";
 import Akcije from "../../components/Akcije";
+import useLoading from "../../hooks/useLoading";
+
 
 export default function printersAdd(){
 
     const navigate = useNavigate();
     const {prikaziError} = useError();
+    const { showLoading, hideLoading } = useLoading();
 
     async function dodajPrinter(printer){
+        showLoading();
         const odgovor = await Service.dodaj('Printer', printer);
+        hideLoading();
         if(odgovor.ok){
             navigate(RouteNames.PRINTER_VIEW);
             return;

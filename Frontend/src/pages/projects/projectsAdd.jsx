@@ -12,6 +12,8 @@ import Akcije from "../../components/Akcije";
 import InputText from "../../components/InputText";
 import InputCheckbox from "../../components/InputCheckbox";
 import Service from "../../services/ProjectService";
+import useLoading from "../../hooks/useLoading";
+
 
 import { hr } from 'date-fns/locale/hr';
 registerLocale('hr', hr);
@@ -20,9 +22,12 @@ setDefaultLocale('hr');
 export default function ProjectsAdd() {
     const navigate = useNavigate();
     const { prikaziError } = useError();
+    const { showLoading, hideLoading } = useLoading();
 
     async function dodajProject(project) {
+        showLoading();
         const odgovor = await Service.dodaj('Project',project);
+        hideLoading();
         if(odgovor.ok){
             navigate(RouteNames.PROJECT_VIEW);
             return
