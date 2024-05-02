@@ -8,6 +8,7 @@ import Service from "../../services/PartService";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import ProjectService from "../../services/ProjectService";
 import useLoading from "../../hooks/useLoading";
+import { NumericFormat } from "react-number-format";
 
 
 export default function parts() {
@@ -76,7 +77,7 @@ export default function parts() {
                     <tr>
                         <th>Part Name</th>
                         <th>Print Count</th>
-                        <th>Print Time (hours)</th>
+                        <th>Print Time</th>
                         <th>Cost (€)</th>
                         <th>Edit/Delete</th>
                     </tr>
@@ -86,8 +87,22 @@ export default function parts() {
                         <tr key={index}>
                             <td>{part.partName}</td>
                             <td>{part.printCount}</td>
-                            <td>{part.printTime / 60}</td>
-                            <td>{part.cost}</td>
+                            <td>{parseInt(part.printTime / 60)}h {part.printTime % 60}min</td>
+                            {/* <td>{part.cost}€</td> */}
+
+                            <td>{part.cost == null
+                                ? 0
+                                :
+                                <NumericFormat
+                                    value={part.cost}
+                                    displayType='text'
+                                    // thousandSeparator='.'
+                                    // decimalSeparator=','
+                                    decimalScale={2}
+                                    prefix='€'
+                                    fixedDecimalScale
+                                />}</td>
+
                             <td>                                
                                 <Button
                                     onClick={() => { navigate(`/parts/${part.id}`) }}

@@ -72,7 +72,7 @@ export default function Projects() {
                         <th>Creation Date</th>
                         <th>Completion Date</th>
                         <th>Print Count</th>
-                        <th>Print Time (hours)</th>
+                        <th>Print Time</th>
                         <th>Cost (€)</th>
                         <th>Description</th>
                         <th>Edit/Delete</th>
@@ -99,7 +99,7 @@ export default function Projects() {
                             <td>{project.completionDate == null ? 'Date not specified' :
                                 moment(project.completionDate).format('DD/MM/YYYY')}</td>
                             <td>{project.totalPrintCount == null ? 0 : project.totalPrintCount}</td>
-                            <td>{project.totalPrintTime == null ? 0 : project.totalPrintTime / 60}</td>
+                            <td>{parseInt(project.totalPrintTime / 60)}h {project.totalPrintTime %60}min</td>
                             <td>{project.totalCost == null
                                 ? 0
                                 :

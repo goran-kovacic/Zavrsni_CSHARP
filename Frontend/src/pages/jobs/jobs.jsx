@@ -8,6 +8,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { IoIosAdd } from "react-icons/io";
 import { RouteNames } from "../../constants";
 import { Button, Container, Form, FormGroup, Table } from "react-bootstrap";
+import { NumericFormat } from "react-number-format";
 
 
 export default function jobs(){
@@ -73,7 +74,7 @@ export default function jobs(){
                     <tr>
                         <th>Part Name</th>
                         <th>Volume (mL)</th>
-                        <th>Print Time (hours)</th>
+                        <th>Print Time</th>
                         <th>Cost (€)</th>
                         <th>Resin</th>
                         <th>Printer</th>
@@ -85,8 +86,22 @@ export default function jobs(){
                         <tr key={index}>
                             <td>{job.part_Name}</td>
                             <td>{job.volume}</td>
-                            <td>{job.printTime / 60}</td>
-                            <td>{job.cost}</td>
+                            <td>{parseInt(job.printTime / 60)}h {job.printTime % 60}min</td>
+                            {/* <td>{job.cost}€</td> */}
+
+                            <td>{job.cost == null
+                                ? 0
+                                :
+                                <NumericFormat
+                                    value={job.cost}
+                                    displayType='text'
+                                    // thousandSeparator='.'
+                                    // decimalSeparator=','
+                                    decimalScale={2}
+                                    prefix='€'
+                                    fixedDecimalScale
+                                />}</td>
+
                             <td>{job.material_Name}</td>
                             <td>{job.printer_Name}</td>
                             {/* <td>{job.result}</td> */}
