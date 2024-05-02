@@ -81,6 +81,35 @@ namespace PrintApp.Controllers
             return entity;
         }
 
-        
+        [HttpDelete("{projectId}")]
+        public async Task<IActionResult> DeleteProject(int projectId)
+        {
+            // Find the project by ID
+            var project = await _context.Projects.Include(p => p.PartsInProject).ThenInclude(part => part.JobsInPart)
+                                                  .FirstOrDefaultAsync(p => p.Id == projectId);
+
+            if (project == null)
+            {
+                return NotFound(); // Project not found
+            }
+
+            // Remove all jobs assigned to parts assigned to the project
+            foreach (var part in project.PartsInProject)
+            {
+                _context.PrintJobs.RemoveRange(part.JobsInPart);
+            }
+
+            // Remove all parts assigned to the project
+            _context.Parts.RemoveRange(project.PartsInProject);
+
+            // Remove the project
+            _context.Projects.Remove(project);
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+
+            return NoContent(); // Success
+        }
+
     }
 }
