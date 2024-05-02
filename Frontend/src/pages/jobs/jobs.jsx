@@ -38,7 +38,7 @@ export default function jobs(){
             return;
         }
         setJobs(odgovor.podaci);
-        console.log(odgovor.podaci);
+        // console.log(odgovor.podaci);
         setIdPart(id);
     }
 
@@ -72,12 +72,12 @@ export default function jobs(){
                 <thead>
                     <tr>
                         <th>Part Name</th>
-                        <th>Volume</th>
-                        <th>Print Time</th>
-                        <th>Cost</th>
+                        <th>Volume (mL)</th>
+                        <th>Print Time (hours)</th>
+                        <th>Cost (€)</th>
                         <th>Resin</th>
                         <th>Printer</th>
-                        <th>Result</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,31 +85,28 @@ export default function jobs(){
                         <tr key={index}>
                             <td>{job.part_Name}</td>
                             <td>{job.volume}</td>
-                            <td>{job.printTime}</td>
+                            <td>{job.printTime / 60}</td>
                             <td>{job.cost}</td>
                             <td>{job.material_Name}</td>
                             <td>{job.printer_Name}</td>
                             {/* <td>{job.result}</td> */}
                             <td>
-                                <Button
-                                onClick={()=> obrisiJob(job.id)}
-                                variant="danger"
-                                size="sm"
-                                >
-                                <FaTrash
-                                size={25}/>
-                                Delete
-                                </Button>
-
-                                <Button
+                                {/* <Button
                                 onClick={()=>{navigate(`/jobs/${job.id}`) }}
-                                size="md"
                                 variant="primary"
                                 >
                                     <FaEdit
                                     size={25}
                                     />
                                     Edit
+                                </Button> */}
+                                <Button
+                                onClick={()=> obrisiJob(job.id)}
+                                variant="danger"
+                                >
+                                <FaTrash
+                                size={25}/>
+                                Delete
                                 </Button>
                             </td>
                         </tr>

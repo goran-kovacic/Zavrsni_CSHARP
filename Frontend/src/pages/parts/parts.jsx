@@ -38,7 +38,7 @@ export default function parts() {
             return;
         }
         setParts(odgovor.podaci);
-        console.log(odgovor.podaci);
+        // console.log(odgovor.podaci);
         setIdProject(id);
     }
 
@@ -75,8 +75,9 @@ export default function parts() {
                 <thead>
                     <tr>
                         <th>Part Name</th>
-                        <th>Print Time</th>
-                        <th>Cost</th>
+                        <th>Print Count</th>
+                        <th>Print Time (hours)</th>
+                        <th>Cost (€)</th>
                         <th>Edit/Delete</th>
                     </tr>
                 </thead>
@@ -84,23 +85,13 @@ export default function parts() {
                     {parts && parts.map((part, index) => (
                         <tr key={index}>
                             <td>{part.partName}</td>
-                            <td>{part.printTime}</td>
+                            <td>{part.printCount}</td>
+                            <td>{part.printTime / 60}</td>
                             <td>{part.cost}</td>
-                            <td>
-                                <Button
-                                    onClick={() => obrisiPart(part.id)}
-                                    variant='danger'
-                                    size='sm'
-                                >
-                                    <FaTrash
-                                        size={25}
-                                    />
-                                    Delete
-                                </Button>
-
+                            <td>                                
                                 <Button
                                     onClick={() => { navigate(`/parts/${part.id}`) }}
-                                    size='md'
+                                    // size='md'
                                     variant='primary'
                                 >
                                     <FaEdit
@@ -108,6 +99,17 @@ export default function parts() {
                                     />
                                     Edit
                                 </Button>
+                                <Button
+                                    onClick={() => obrisiPart(part.id)}
+                                    variant='danger'
+                                    // size='md'
+                                >
+                                    <FaTrash
+                                        size={25}
+                                    />
+                                    Delete
+                                </Button>
+
                             </td>
                         </tr>
                     ))}

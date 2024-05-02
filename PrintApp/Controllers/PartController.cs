@@ -77,6 +77,10 @@ namespace PrintApp.Controllers
             entity.FilesInPart = new List<PrintFile>();
             entity.JobsInPart = new List<PrintJob>();
 
+            if (entity.Cost == null) { entity.Cost = 0; }
+            if (entity.PrintTime == null) { entity.PrintTime = 0; }
+            if (entity.PrintCount == null) { entity.PrintCount = 0; }
+
             return entity;
         }
 

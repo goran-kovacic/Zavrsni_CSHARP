@@ -54,7 +54,7 @@ export default function partsAdd() {
         const podaci = new FormData(e.target);
 
         dodaj({
-            partName: podaci.get('Part Name'),
+            partName: podaci.get('Part Name:'),
             idProject: parseInt(sifraProject)
         });
     }
@@ -63,12 +63,12 @@ export default function partsAdd() {
         <Container className="mt-4">
             <Form onSubmit={handleSubmit}>
 
-                <InputText atribut="Part Name" vrijednost='' />
+                <InputText atribut="Part Name:" vrijednost='' />
 
                 <FormGroup className="mb-3" controlId="project">
-                    <FormLabel>Project</FormLabel>
+                    <FormLabel>Select Project:</FormLabel>
                     <Form.Select onChange={(e) => { setSifraProject(e.target.value) }}>
-                        <option>Select Project</option>
+                        {/* <option>Select Project</option> */}
                         
                         {project && project.map((s, index) => (
                             <option key={index} value={s.id}>

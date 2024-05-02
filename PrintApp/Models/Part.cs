@@ -7,6 +7,7 @@ namespace PrintApp.Models
         public string PartName { get; set; }
         public decimal? Cost { get; set; }
         public int? PrintTime { get; set; }
+        public int? PrintCount { get; set; }
         [ForeignKey("project_id")]
         public Project? Project { get; set; }
         public List<PrintFile>? FilesInPart { get; set; }

@@ -15,7 +15,7 @@ namespace PrintApp.Mappers
                     entity.Id,
                     entity.Cost,
                     entity.PrintTime,
-                    entity.Result,
+                    //entity.Result,
                     entity.Volume,
                     entity.Material == null ? "" : entity.Material.MaterialName,
                     entity.Part == null ? "" : entity.Part.PartName,
@@ -34,7 +34,7 @@ namespace PrintApp.Mappers
                 .ConstructUsing(entity =>
                 new JobDTOInsertUpdate(
                     entity.PrintTime,
-                    entity.Result,
+                    //entity.Result,
                     entity.Volume,
                     entity.Material == null ? null : entity.Material.Id,
                     entity.Part == null ? null : entity.Part.Id,

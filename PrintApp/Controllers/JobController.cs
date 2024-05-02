@@ -27,8 +27,11 @@ namespace PrintApp.Controllers
                 ?? throw new Exception("Ne postoji printer sa šifrom " + dto.PrinterId + " u bazi");
             var material = _context.Materials.Find(dto.MaterialId)
                 ?? throw new Exception("Ne postoji resin sa šifrom " + dto.MaterialId + " u bazi");
-            var part = _context.Parts.Find(dto.PartId)
+            var part = _context.Parts.Include(p => p.Project).FirstOrDefault(p => p.Id == dto.PartId)
                 ?? throw new Exception("Ne postoji part sa šifrom " + dto.PartId + " u bazi");
+
+
+
             var entity = _mapper.MapInsertUpdatedFromDTO(dto);
 
             entity.Printer = printer;
@@ -36,7 +39,23 @@ namespace PrintApp.Controllers
             entity.Part = part;
 
             entity.Printer.FepCount = entity.Printer.FepCount + 1;
-            entity.Printer.PrinterTime = entity.Printer.PrinterTime + entity.PrintTime;
+            entity.Printer.PrinterTime += entity.PrintTime;
+            
+            part.PrintTime += entity.PrintTime;
+            part.PrintCount += 1;
+            
+
+            decimal costOfPrint = (decimal)(entity.Material.CostPerUnit * (entity.Volume / 1000));
+
+            entity.Cost = costOfPrint;
+            part.Cost = part.Cost + costOfPrint;
+            if (entity.Part.Project != null)
+            {
+                entity.Part.Project.TotalCost += costOfPrint;
+                part.Project.TotalPrintTime += entity.PrintTime;
+                part.Project.TotalPrintCount += 1;
+            }
+
 
             return entity;
         }
@@ -74,7 +93,7 @@ namespace PrintApp.Controllers
             var printer = _context.Printers.Find(dto.PrinterId)
                 ?? throw new Exception("Ne postoji printer sa šifrom " + dto.PrinterId + " u bazi");
 
-            entity.Result = dto.Result;
+            //entity.Result = dto.Result;
             entity.Volume = dto.Volume;
             entity.Material = material;
             entity.Part = part;

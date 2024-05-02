@@ -55,7 +55,7 @@ namespace PrintApp.Controllers
         }
 
         [HttpPatch]
-        [Route("{id:int}")]
+        [Route("ResetFEP/{id:int}")]
         public async Task<ActionResult> ResetFep(int id)
         {
             var entitet = _context.Printers.Find(id);

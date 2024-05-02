@@ -6,7 +6,7 @@ namespace PrintApp.Models
     {
         public decimal? Cost { get; set; }
         public int? PrintTime { get; set; }
-        public bool? Result { get; set; }
+        //public bool? Result { get; set; }
         public decimal? Volume { get; set; }
         [ForeignKey("material")]
         public Material? Material { get; set; }

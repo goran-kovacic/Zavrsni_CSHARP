@@ -99,15 +99,15 @@ export default function Projects() {
                             <td>{project.completionDate == null ? 'Date not specified' :
                                 moment(project.completionDate).format('DD/MM/YYYY')}</td>
                             <td>{project.totalPrintCount == null ? 0 : project.totalPrintCount}</td>
-                            <td>{project.totalPrintTime == null ? 0 : project.totalPrintTime}</td>
+                            <td>{project.totalPrintTime == null ? 0 : project.totalPrintTime / 60}</td>
                             <td>{project.totalCost == null
                                 ? 0
                                 :
                                 <NumericFormat
                                     value={project.totalCost}
                                     displayType='text'
-                                    thousandSeparator='.'
-                                    decimalSeparator=','
+                                    // thousandSeparator='.'
+                                    // decimalSeparator=','
                                     decimalScale={2}
                                     prefix='€'
                                     fixedDecimalScale
@@ -118,26 +118,25 @@ export default function Projects() {
                             }</td>
                             <td>
                                 <Button
-                                    onClick={() => obrisiProject(project.id)}
-                                    variant='danger'
-                                    size='sm'
-
-                                >
-                                    <FaTrash
-                                        size={25}
-                                    />
-                                    Delete
-                                </Button>
-
-                                <Button
                                     onClick={() => { navigate(`/projects/${project.id}`) }}
-                                    size='md'
+                                    // size='sd'
                                     variant='primary'
                                 >
                                     <FaEdit
                                         size={25}
                                     />
                                     Edit
+                                </Button>
+                                <Button
+                                    onClick={() => obrisiProject(project.id)}
+                                    variant='danger'
+                                    // size='sm'
+
+                                >
+                                    <FaTrash
+                                        size={25}
+                                    />
+                                    Delete
                                 </Button>
                             </td>
                         </tr>

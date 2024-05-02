@@ -33,7 +33,7 @@ export default function Printers() {
     }
 
     async function resetFep(id){
-        const odgovor = await Service.reset('Printer', id);
+        const odgovor = await Service.reset('Printer/ResetFEP', id);
         // prikaziError(odgovor.podaci);
         if(odgovor.ok){
             dohvatiPrinters();
@@ -67,7 +67,7 @@ export default function Printers() {
                         <tr key={index}>
                             <td>{printer.printerName}</td>
                             <td>{printer.manufacturer}</td>
-                            <td>{printer.printerTime}</td>
+                            <td>{printer.printerTime / 60}</td>
                             <td>{printer.fepCount}
                             &nbsp;&nbsp;&nbsp;&nbsp;
                                 <Button 

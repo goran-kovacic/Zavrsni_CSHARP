@@ -83,6 +83,7 @@ namespace PrintApp.Models
         string? PartName,
         decimal? Cost,
         int? PrintTime,
+        int? PrintCount,
         string? Project_Name,
         int FilesNumber,
         int JobsNumber
@@ -200,7 +201,7 @@ namespace PrintApp.Models
         int Id,
         decimal? Cost,
         int? PrintTime,
-        bool? Result,
+        //bool? Result,
         decimal? Volume,
         string? Material_Name,
         string? Part_Name,
@@ -210,7 +211,7 @@ namespace PrintApp.Models
     public record JobDTOInsertUpdate(
         [Required(ErrorMessage = "{0} obavezno")]
         int? PrintTime,
-        bool? Result,
+        //bool? Result,
         [Range(1, 1000, ErrorMessage = "{0} mora biti između {1} i {2}")]
         [Required(ErrorMessage = "{0} obavezno")]
         decimal? Volume,

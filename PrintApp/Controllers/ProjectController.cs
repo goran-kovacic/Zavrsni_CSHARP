@@ -60,5 +60,27 @@ namespace PrintApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        protected override Project KreirajEntitet(ProjectDTOInsertUpdate dto)
+        {
+            var entity = _mapper.MapInsertUpdatedFromDTO(dto);
+
+            if (entity.TotalCost == null)
+            {
+                entity.TotalCost = 0;
+            }
+            if(entity.TotalPrintCount == null)
+            {
+                entity.TotalPrintCount = 0;
+            }
+            if(entity.TotalPrintTime == null)
+            {
+                entity.TotalPrintTime = 0;
+            }
+
+            return entity;
+        }
+
+        
     }
 }
