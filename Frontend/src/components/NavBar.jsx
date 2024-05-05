@@ -5,10 +5,13 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { RouteNames } from '../constants';
 import { useNavigate } from 'react-router-dom';
 import { NavItem, NavLink } from 'react-bootstrap';
+import useAuth from '../hooks/useAuth';
+
 
 export default function NavBar() {
 
     const navigate = useNavigate();
+    const { logout, isLoggedIn } = useAuth();
 
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
@@ -20,49 +23,47 @@ export default function NavBar() {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link
-                            // href="https://kovacicg-001-site1.ltempurl.com/swagger/index.html"
-                            href="https://printtracker.runasp.net/swagger/index.html"
-                            target='_blank'>API</Nav.Link>
-                        <NavLink
-                            onClick={() => navigate(RouteNames.PROJECT_VIEW)}
-                        >Projects</NavLink>
+                        {isLoggedIn ? (
+                            <>
+                                <Nav.Link onClick={() => navigate(RouteNames.NADZORNA_PLOCA)}>Statistics</Nav.Link>
 
-                        <NavLink
-                            onClick={() => navigate(RouteNames.PART_VIEW)}
-                        >
-                            Parts
-                        </NavLink>
 
-                        <NavLink
-                            onClick={() => navigate(RouteNames.JOB_VIEW)}
-                        >
-                            Print Jobs
-                        </NavLink>
+                                <Nav.Link
+                                    href="https://printtracker.runasp.net/swagger/index.html"
+                                    target='_blank'>API</Nav.Link>
+                                <NavLink
+                                    onClick={() => navigate(RouteNames.PROJECT_VIEW)}
+                                >Projects</NavLink>
 
-                        <NavLink
-                            onClick={() => navigate(RouteNames.RESIN_VIEW)}
-                        >
-                            Resins
-                        </NavLink>
+                                <NavLink
+                                    onClick={() => navigate(RouteNames.PART_VIEW)}
+                                >
+                                    Parts
+                                </NavLink>
 
-                        <NavLink
-                            onClick={() => navigate(RouteNames.PRINTER_VIEW)}
-                        >Printers</NavLink>
+                                <NavLink
+                                    onClick={() => navigate(RouteNames.JOB_VIEW)}
+                                >
+                                    Print Jobs
+                                </NavLink>
 
-                        {/* <NavDropdown title="MENU" id="collapsible-nav-dropdown">
-                            <NavDropdown.Item
-                                onClick={() => navigate(RouteNames.PROJECT_VIEW)}>
-                                Projects</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
-                                Printers
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Resins</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">
-                                Users
-                            </NavDropdown.Item>
-                        </NavDropdown> */}
+                                <NavLink
+                                    onClick={() => navigate(RouteNames.RESIN_VIEW)}
+                                >
+                                    Resins
+                                </NavLink>
+
+                                <NavLink
+                                    onClick={() => navigate(RouteNames.PRINTER_VIEW)}
+                                >Printers</NavLink>
+
+                                <Nav.Link onClick={logout}>Odjava</Nav.Link>
+                            </>
+                        ) : (
+                            <Nav.Link onClick={() => navigate(RouteNames.LOGIN)}>
+                                Prijava
+                            </Nav.Link>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

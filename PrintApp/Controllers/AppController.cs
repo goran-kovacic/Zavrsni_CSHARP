@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PrintApp.Data;
 using PrintApp.Mappers;
@@ -6,6 +7,7 @@ using PrintApp.Models;
 
 namespace PrintApp.Controllers
 {
+    [Authorize]
     public abstract class AppController<T, TDR, TDI>(PrintAppContext context) : ControllerBase where T : Entity
     {
         protected DbSet<T> DbSet = null;

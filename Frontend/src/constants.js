@@ -18,10 +18,10 @@ export const RouteNames = {
 
     JOB_VIEW: '/jobs',
     JOB_NEW: '/jobs/add',
-    JOB_EDIT: '/jobs/:id'
+    JOB_EDIT: '/jobs/:id',
 
-
-    
+    LOGIN: '/login',
+    NADZORNA_PLOCA: '/nadzornaploca'
 };
 
 export const App = {
