@@ -13,16 +13,29 @@ namespace PrintApp.Models
         int? TotalPrintTime, 
         int? TotalPrintCount,
         decimal? TotalCost,
-        string? ProjectDescription
+        string? ProjectDescription,
+        string? slika
         );
 
 
 
     public class ProjectDTOInsertUpdate : IValidatableObject
     {
+        public ProjectDTOInsertUpdate(string projectName, string? projectDescription, DateTime? creationDate, DateTime? completionDate, bool? isCompleted, int? totalPrintTime, int? totalPrintCount, decimal? totalCost, string slika)
+        {
+            ProjectName = projectName;
+            ProjectDescription = projectDescription;
+            CreationDate = creationDate;
+            CompletionDate = completionDate;
+            IsCompleted = isCompleted;
+            TotalPrintTime = totalPrintTime;
+            TotalPrintCount = totalPrintCount;
+            TotalCost = totalCost;
+            Slika = slika;
+        }
+
         [Required(ErrorMessage = "{0} required")]
         public string ProjectName { get; set; }
-
         [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
         public string? ProjectDescription { get; set; }
         [DataType(DataType.Date)]
@@ -33,22 +46,25 @@ namespace PrintApp.Models
         public int? TotalPrintTime { get; set; }
         public int? TotalPrintCount { get; set; }
         public decimal? TotalCost { get; set; }
+        public string? Slika { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
 
-            if ( CreationDate==null && CompletionDate!=null)
+            if (CreationDate == null && CompletionDate != null)
             {
                 yield return new ValidationResult("cannot enter completion date without creation date");
-            }else if(CreationDate==null || CompletionDate==null){
+            }
+            else if (CreationDate == null || CompletionDate == null)
+            {
                 yield return ValidationResult.Success;
             }
-            else  if(CompletionDate.Value < CreationDate.Value)
+            else if (CompletionDate.Value < CreationDate.Value)
             {
                 yield return new ValidationResult("end date must be greater than start date");
             }
 
-            
+
         }
     }
 
@@ -64,7 +80,12 @@ namespace PrintApp.Models
     //    //[Required(ErrorMessage = "Creation date is required")]
     //    DateTime? CreationDate,
     //    [DateGreaterThan("CreationDate")]
-    //    DateTime? CompletionDate
+    //    DateTime? CompletionDate,
+    //    bool? isCompleted,
+    //    int? TotalPrintTime,
+    //    int? TotalPrintCount,
+    //    decimal? TotalCost,
+    //    string? slika
     //    );
 
     public record UserDTORead(
@@ -235,4 +256,6 @@ namespace PrintApp.Models
         [Required(ErrorMessage = "Lozinka obavezno")]
         string? password
         );
+
+    public record SlikaDTO([Required(ErrorMessage = "Base64 zapis slike obavezno")] string Base64);
 }

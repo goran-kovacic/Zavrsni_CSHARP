@@ -16,6 +16,7 @@ namespace PrintApp.Controllers
         public ProjectController(PrintAppContext context) : base(context) 
         {
             DbSet = _context.Projects;
+            _mapper = new MappingProjects();
         }
 
         protected override void ControlDelete(Project entity)
@@ -107,6 +108,43 @@ namespace PrintApp.Controllers
             await _context.SaveChangesAsync();
 
             return Ok("Obrisano");
+        }
+
+        [HttpPut]
+        [Route("postaviSliku/{id:int}")]
+        public IActionResult PostaviSliku(int id, SlikaDTO slika)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("Šifra mora biti veća od nula (0)");
+            }
+            if (slika.Base64 == null || slika.Base64?.Length == 0)
+            {
+                return BadRequest("Slika nije postavljena");
+            }
+            var p = _context.Projects.Find(id);
+            if (p == null)
+            {
+                return BadRequest("Ne postoji project s šifrom " + id + ".");
+            }
+            try
+            {
+                var ds = Path.DirectorySeparatorChar;
+                string dir = Path.Combine(Directory.GetCurrentDirectory()
+                    + ds + "wwwroot" + ds + "slike" + ds + "projects");
+
+                if (!System.IO.Directory.Exists(dir))
+                {
+                    System.IO.Directory.CreateDirectory(dir);
+                }
+                var putanja = Path.Combine(dir + ds + id + ".png");
+                System.IO.File.WriteAllBytes(putanja, Convert.FromBase64String(slika.Base64));
+                return Ok("Uspješno pohranjena slika");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
     }

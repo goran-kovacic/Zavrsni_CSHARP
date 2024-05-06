@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Service from "../../services/ProjectService";
 import { Button, Container, Table } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { RouteNames } from '../../constants'
+import { App, RouteNames } from '../../constants'
 import moment from 'moment';
 import { IoIosAdd } from 'react-icons/io';
 import useError from "../../hooks/useError";
@@ -12,6 +12,7 @@ import { FaDumpsterFire, FaEdit, FaToiletPaperSlash, FaTrash, FaTrashRestore } f
 import { BsSticky, BsStickyFill } from 'react-icons/bs';
 import useLoading from "../../hooks/useLoading";
 import { FaDumpster, FaRegTrashCan } from 'react-icons/fa6';
+import Modal from '../../components/Modal'
 
 export default function Projects() {
 
@@ -19,6 +20,16 @@ export default function Projects() {
     const navigate = useNavigate();
     const { prikaziError } = useError();
     const { showLoading, hideLoading } = useLoading();
+
+    const [modalImage, setModalImage] = useState(null);
+
+    const openModal = (imageSrc) => {
+        setModalImage(imageSrc);
+    };
+
+    const closeModal = () => {
+        setModalImage(null);
+    };
 
 
     async function dohvatiProjects() {
@@ -68,6 +79,27 @@ export default function Projects() {
         return 'NOT completed';
     }
 
+    function slika(project) {
+        if (project.slika != null) {
+            return App.URL + project.slika + `?${Date.now()}`;
+        }
+        return null;
+    }
+
+    const handleDownload = (imageUrl) => {
+        const link = document.createElement('a');
+        link.href = imageUrl;
+        link.download = 'image.jpg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    
+        const openImageInNewTab = (imageUrl) => {
+            window.open(imageUrl, '_blank');
+        };
+
     return (
         <Container>
             <Link to={RouteNames.PROJECT_NEW} className='btn btn-success siroko'>
@@ -79,7 +111,7 @@ export default function Projects() {
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Completed</th>
+                        <th>Status</th>
                         <th>Creation Date</th>
                         <th>Completion Date</th>
                         <th>Print Count</th>
@@ -118,10 +150,19 @@ export default function Projects() {
                                     prefix='€'
                                     fixedDecimalScale
                                 />}</td>
-                            <td>{project.projectDescription > 10
+                            {/* <td>{project.projectDescription > 10
                                 ? `${project.projectDescription.substring(0, 10)}...`
                                 : project.projectDescription
-                            }</td>
+                            }</td> */}
+                            <td>
+                                <img
+                                    src={slika(project)}
+                                    style={{ maxWidth: '100px', maxHeight: '100px' }}
+                                    onClick={()=> openImageInNewTab(slika(project))}
+                                    
+                                    
+                                    />
+                                    </td>
                             <td>
                                 <Button
                                     onClick={() => { navigate(`/projects/${project.id}`) }}
@@ -162,6 +203,7 @@ export default function Projects() {
                     ))}
                 </tbody>
             </Table>
+            
         </Container>
     );
 }

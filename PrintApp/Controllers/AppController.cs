@@ -7,7 +7,7 @@ using PrintApp.Models;
 
 namespace PrintApp.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public abstract class AppController<T, TDR, TDI>(PrintAppContext context) : ControllerBase where T : Entity
     {
         protected DbSet<T> DbSet = null;
