@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useError from "../../hooks/useError";
-import { Button, Container, Form, FormGroup, Table } from "react-bootstrap";
-import { RouteNames } from "../../constants";
+import { Button, Modal, Container, Form, FormGroup, Table } from "react-bootstrap";
+import { App, RouteNames } from "../../constants";
 import { IoIosAdd } from "react-icons/io";
 import Service from "../../services/PartService";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaDownload, FaEdit, FaTrash, FaUpload } from "react-icons/fa";
 import ProjectService from "../../services/ProjectService";
 import useLoading from "../../hooks/useLoading";
 import { NumericFormat } from "react-number-format";
@@ -17,6 +17,8 @@ export default function parts() {
     const navigate = useNavigate();
     const { prikaziError } = useError();
     const { showLoading, hideLoading } = useLoading();
+    const [prikaziModal, setPrikaziModal] = useState(false);
+    const [selectedPart, setSelectedPart] = useState({});
 
     const [projects, setProjects] = useState([]);
     const [idProject, setIdProject] = useState(0);
@@ -44,7 +46,9 @@ export default function parts() {
     }
 
     async function obrisiPart(id) {
+        showLoading();
         const odgovor = await Service.obrisi('Part', id);
+        hideLoading();
         prikaziError(odgovor.podaci);
         if (odgovor.ok) {
             dohvatiParts();
@@ -68,7 +72,33 @@ export default function parts() {
         dohvatiProjects();
     }, []);
 
+    function postaviDatotekuModal(part) {
+        setSelectedPart(part);
+        setPrikaziModal(true);
+    }
 
+    function zatvoriModal() {
+        setPrikaziModal(false);
+    }
+
+    async function postaviDatoteku(e) {
+        if (e.currentTarget.files) {
+            const formData = new FormData();
+            formData.append('datoteka', e.currentTarget.files[0]);
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                },
+            };
+            showLoading();
+            const odgovor = await Service.postaviDatoteku(selectedPart.id, formData, config);
+            hideLoading();
+            if (odgovor.ok) {
+                dohvatiParts();
+                setPrikaziModal(false);
+            }
+        }
+    }
 
     const PartsTable = ({ parts }) => {
         return (
@@ -126,6 +156,26 @@ export default function parts() {
                                     Delete
                                 </Button>
 
+                                {part.datoteka != null ?
+                                    <>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <a target="_blank" href={App.URL + part.datoteka}>
+                                            <FaDownload
+                                                size={25} />
+                                        </a>
+                                    </>
+
+                                    : ''
+                                }
+                                &nbsp;&nbsp;&nbsp;
+                                <Button
+                                    onClick={() => postaviDatotekuModal(part)}
+                                >
+                                    <FaUpload
+                                        size={25} />
+                                </Button>
+
+
                             </td>
                         </tr>
                     ))}
@@ -163,19 +213,43 @@ export default function parts() {
     // }
 
     return (
-        <Container>
-            <Link to={RouteNames.PART_NEW} className="btn btn-success siroko">
-                <IoIosAdd
-                    size={25}
-                /> Add New Part
-            </Link>
+        <>
+            <Container>
+                <Link to={RouteNames.PART_NEW} className="btn btn-success siroko">
+                    <IoIosAdd
+                        size={25}
+                    /> Add New Part
+                </Link>
 
-            <ProjectDropdown
-                projects={projects}
-            // selectedProject={handleSelectProject}
-            />
-            <PartsTable parts={parts} />
+                <ProjectDropdown
+                    projects={projects}
+                // selectedProject={handleSelectProject}
+                />
+                <PartsTable parts={parts} />
 
-        </Container>
+            </Container>
+            <Modal show={prikaziModal} onHide={zatvoriModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Upload file for part: <br /> {selectedPart.partName}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group>
+                            <Form.Control type="file" size="lg"
+                                name='datoteka'
+                                id='datoteka'
+                                onChange={postaviDatoteku}
+                            />
+                        </Form.Group>
+                        <hr />
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant='secondary' onClick={zatvoriModal}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     )
 }

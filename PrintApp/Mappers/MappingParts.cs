@@ -19,7 +19,8 @@ namespace PrintApp.Mappers
                     entity.PrintCount == null ? 0 : entity.PrintCount.Value,
                     entity.Project == null ? "" : entity.Project.ProjectName,
                     entity.FilesInPart == null ? 0 : entity.FilesInPart.Count,
-                    entity.JobsInPart == null ? 0 : entity.JobsInPart.Count
+                    entity.JobsInPart == null ? 0 : entity.JobsInPart.Count,
+                    PutanjaDatoteke(entity)
                     ));
             }));
 
@@ -40,6 +41,23 @@ namespace PrintApp.Mappers
                     entity.Cost == null ? null : entity.Cost.Value
                     ));
             }));
+        }
+
+        private string? PutanjaDatoteke(Part e)
+        {
+            try
+            {
+                var ds = Path.DirectorySeparatorChar;
+                string dir = Path.Combine(Directory.GetCurrentDirectory()
+                    + ds + "wwwroot" + ds + "datoteke" + ds + "parts" + ds);
+                DirectoryInfo d = new DirectoryInfo(dir);
+                FileInfo[] Files = d.GetFiles(e.Id + "_*").OrderBy(p => p.CreationTime).ToArray(); 
+                return Files != null && Files.Length > 0 ? "/datoteke/parts/" + Files[Files.Length - 1].Name : null;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

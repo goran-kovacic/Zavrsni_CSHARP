@@ -110,7 +110,8 @@ namespace PrintApp.Models
         int? PrintCount,
         string? Project_Name,
         int FilesNumber,
-        int JobsNumber
+        int JobsNumber,
+        string? datoteka
         );
 
     public record PartDTOInsertUpdate(

@@ -115,5 +115,40 @@ namespace PrintApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPatch]
+        [Route("{partId:int}")]
+        public async Task<ActionResult> Patch(int partId, IFormFile datoteka)
+        {
+            if (datoteka == null)
+            {
+                return BadRequest("Datoteka nije postavljena");
+            }
+
+            var entitetIzbaze = _context.Parts.Find(partId);
+
+            if (entitetIzbaze == null)
+            {
+                return BadRequest("Ne postoji part sa šifrom " + partId + " u bazi");
+            }
+            try
+            {
+                var ds = Path.DirectorySeparatorChar;
+                string dir = Path.Combine(Directory.GetCurrentDirectory()
+                    + ds + "wwwroot" + ds + "datoteke" + ds + "parts");
+                if (!System.IO.Directory.Exists(dir))
+                {
+                    System.IO.Directory.CreateDirectory(dir);
+                }
+                var putanja = Path.Combine(dir + ds + partId + "_" + System.IO.Path.GetExtension(datoteka.FileName));
+                Stream fileStream = new FileStream(putanja, FileMode.Create);
+                await datoteka.CopyToAsync(fileStream);
+                return Ok("Datoteka pohranjena");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

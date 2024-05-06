@@ -19,6 +19,10 @@ async function getWithProject(id) {
         });
 }
 
+async function postaviDatoteku(sifra,datoteka,config) {
+    return await HttpService.patch('/Part/' + sifra,datoteka,config).then((res)=>{return obradiUspjeh(res);}).catch((e)=>{ return obradiGresku(e);});
+  }
+
 export default {
     get,
     obrisi,
@@ -26,5 +30,6 @@ export default {
     promjeni,
     getBySifra,
     dohvatiPorukeAlert,
-    getWithProject
+    getWithProject,
+    postaviDatoteku
 };
