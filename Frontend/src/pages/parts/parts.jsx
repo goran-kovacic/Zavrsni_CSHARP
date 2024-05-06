@@ -103,7 +103,7 @@ export default function parts() {
                                     fixedDecimalScale
                                 />}</td>
 
-                            <td>                                
+                            <td>
                                 <Button
                                     onClick={() => { navigate(`/parts/${part.id}`) }}
                                     // size='md'
@@ -114,10 +114,11 @@ export default function parts() {
                                     />
                                     Edit
                                 </Button>
+                                &nbsp;
                                 <Button
                                     onClick={() => obrisiPart(part.id)}
                                     variant='danger'
-                                    // size='md'
+                                // size='md'
                                 >
                                     <FaTrash
                                         size={25}
@@ -138,14 +139,14 @@ export default function parts() {
         return (
             <FormGroup className="mb-3" controlId="project">
                 <Form.Label>Select a Project:</Form.Label>
-                <Form.Select 
-                value={idProject}
-                onChange={e => {
-                    dohvatiPartsWithProject(e.target.value);
-                }}>
+                <Form.Select
+                    value={idProject}
+                    onChange={e => {
+                        dohvatiPartsWithProject(e.target.value);
+                    }}>
                     {/* <option>Select project</option> */}
 
-                    {projects.map((project, index ) => (
+                    {projects.map((project, index) => (
                         <option key={index} value={project.id}>
                             {project.projectName}
                         </option>
@@ -171,7 +172,7 @@ export default function parts() {
 
             <ProjectDropdown
                 projects={projects}
-                // selectedProject={handleSelectProject}
+            // selectedProject={handleSelectProject}
             />
             <PartsTable parts={parts} />
 

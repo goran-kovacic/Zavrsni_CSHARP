@@ -1,8 +1,6 @@
 import { Button, Container, Form } from 'react-bootstrap';
 import useAuth from '../hooks/useAuth';
 
-
-
 export default function Login() {
     const { login } = useAuth();
 
@@ -19,7 +17,7 @@ export default function Login() {
     return (
         <Container>
             <p>user: admin</p>
-            <p>lozinka: admin</p>
+            <p>pw: admin</p>
 
             <Form onSubmit={handleSubmit}>
                 <Form.Group className='mb-3' controlId='email'>
@@ -33,11 +31,11 @@ export default function Login() {
                     />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>Lozinka</Form.Label>
+                    <Form.Label>Password</Form.Label>
                     <Form.Control type='password' name='lozinka' required />
                 </Form.Group>
                 <Button variant='primary' className='gumb' type='submit'>
-                    Autoriziraj
+                    Submit
                 </Button>
             </Form>
         </Container>

@@ -90,6 +90,7 @@ export default function Resins() {
                             <td>{material.bottomLiftDistance}</td>
                             <td>{material.bottomRetractSpeed}</td>
                             <td>
+                                <p>
                                 <Button
                                     onClick={() => obrisiResin(material.id)}
                                     variant='danger'
@@ -101,7 +102,7 @@ export default function Resins() {
                                     />
                                     Delete
                                 </Button>
-
+                                </p>
                                 <Button
                                     onClick={() => { navigate(`/resins/${material.id}`) }}
                                     size='md'

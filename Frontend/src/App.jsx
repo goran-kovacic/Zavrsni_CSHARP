@@ -53,7 +53,7 @@ function App() {
         {isLoggedIn ? (
           <>
             <Route path={RouteNames.NADZORNA_PLOCA} element={<NadzornaPloca />} />
-            
+
             <Route path={RouteNames.PROJECT_VIEW} element={<Projects />} />
             <Route path={RouteNames.PROJECT_NEW} element={<ProjectsAdd />} />
             <Route path={RouteNames.PROJECT_EDIT} element={<ProjectsEdit />} />

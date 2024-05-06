@@ -33,18 +33,18 @@ export default function NavBar() {
                                     target='_blank'>API</Nav.Link>
                                 <NavLink
                                     onClick={() => navigate(RouteNames.PROJECT_VIEW)}
-                                >Projects</NavLink>
+                                ><b>Projects</b></NavLink>
 
                                 <NavLink
                                     onClick={() => navigate(RouteNames.PART_VIEW)}
                                 >
-                                    Parts
+                                    <b>Parts</b>
                                 </NavLink>
 
                                 <NavLink
                                     onClick={() => navigate(RouteNames.JOB_VIEW)}
                                 >
-                                    Print Jobs
+                                    <b>Print Jobs</b>
                                 </NavLink>
 
                                 <NavLink
@@ -55,13 +55,15 @@ export default function NavBar() {
 
                                 <NavLink
                                     onClick={() => navigate(RouteNames.PRINTER_VIEW)}
-                                >Printers</NavLink>
+                                >
+                                    Printers
+                                </NavLink>
 
-                                <Nav.Link onClick={logout}>Odjava</Nav.Link>
+                                <Nav.Link onClick={logout}>Log out</Nav.Link>
                             </>
                         ) : (
                             <Nav.Link onClick={() => navigate(RouteNames.LOGIN)}>
-                                Prijava
+                                Log in
                             </Nav.Link>
                         )}
                     </Nav>
