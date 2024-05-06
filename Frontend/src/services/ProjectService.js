@@ -19,6 +19,10 @@ async function obrisiSVE(id) {
         });
 }
 
+async function postaviSliku(sifra, slika) {
+    return await HttpService.put('/Project/postaviSliku/' + sifra, slika).then((res)=>{return obradiUspjeh(res);}).catch((e)=>{ return obradiGresku(e);});
+  }
+
 export default {
     get,
     obrisi,
@@ -26,5 +30,6 @@ export default {
     promjeni,
     getBySifra,
     dohvatiPorukeAlert,
-    obrisiSVE
+    obrisiSVE,
+    postaviSliku
 };

@@ -14,6 +14,7 @@ import useLoading from "../../hooks/useLoading";
 import { FaDumpster, FaRegTrashCan } from 'react-icons/fa6';
 import Modal from '../../components/Modal'
 
+
 export default function Projects() {
 
     const [projects, setProjects] = useState();
@@ -81,7 +82,9 @@ export default function Projects() {
 
     function slika(project) {
         if (project.slika != null) {
-            return App.URL + project.slika + `?${Date.now()}`;
+            return App.URL + project.slika 
+            // + `?${Date.now()}`
+            ;
         }
         return null;
     }
@@ -95,10 +98,10 @@ export default function Projects() {
         document.body.removeChild(link);
     };
 
-    
-        const openImageInNewTab = (imageUrl) => {
-            window.open(imageUrl, '_blank');
-        };
+
+    const openImageInNewTab = (imageUrl) => {
+        window.open(imageUrl, '_blank');
+    };
 
     return (
         <Container>
@@ -117,7 +120,7 @@ export default function Projects() {
                         <th>Print Count</th>
                         <th>Print Time</th>
                         <th>Cost (€)</th>
-                        <th>Description</th>
+                        <th>Photo</th>
                         <th>Edit/Delete</th>
                     </tr>
                 </thead>
@@ -158,11 +161,11 @@ export default function Projects() {
                                 <img
                                     src={slika(project)}
                                     style={{ maxWidth: '100px', maxHeight: '100px' }}
-                                    onClick={()=> openImageInNewTab(slika(project))}
-                                    
-                                    
-                                    />
-                                    </td>
+                                    onClick={() => openImageInNewTab(slika(project))}
+
+
+                                />
+                            </td>
                             <td>
                                 <Button
                                     onClick={() => { navigate(`/projects/${project.id}`) }}
@@ -203,7 +206,7 @@ export default function Projects() {
                     ))}
                 </tbody>
             </Table>
-            
+
         </Container>
     );
 }

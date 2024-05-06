@@ -58,7 +58,7 @@ namespace PrintApp.Mappers
                 var ds = Path.DirectorySeparatorChar;
                 string slika = Path.Combine(Directory.GetCurrentDirectory()
                     + ds + "wwwroot" + ds + "slike" + ds + "projects" + ds + e.Id + ".png");
-                return File.Exists(slika) ? "/slike/polaznici/" + e.Id + ".png" : null;
+                return File.Exists(slika) ? "/slike/projects/" + e.Id + ".png" : null;
             }
             catch
             {
