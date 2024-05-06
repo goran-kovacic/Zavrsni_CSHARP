@@ -2,17 +2,31 @@ import axios from "axios";
 import {AxiosError} from 'axios';
 import { App } from "../constants";
 
-
 export const HttpService = axios.create({
-
-    // baseURL:'https://kovacicg-001-site1.ltempurl.com/api/v1',
-    // baseURL:'https://printtracker.runasp.net/api/v1',
     baseURL: App.URL + '/api/v1',
     headers:{
         'Content-Type' : 'application/json'
     }
-
 });
+
+HttpService.interceptors.request.use((config) => {
+    config.headers.Authorization = 'Bearer ' + localStorage.getItem('Bearer');
+  
+    return config;
+  });
+  
+  HttpService.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response.status === 401) {
+        localStorage.setItem('Bearer', '');
+        window.location.href = '/';
+      }
+      //Bez ovoga "Promise.reject..." -> "catch" u ni jednom servisu neće hvatati nikakav error,
+      //uvijek će se trigerati samo "then" jer se ovdje uhvati error koji dođe s api-a
+      return Promise.reject(error);
+    }
+  );
 
 
 export async function get(naziv){

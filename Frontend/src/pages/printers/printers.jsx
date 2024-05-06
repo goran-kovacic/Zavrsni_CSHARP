@@ -8,6 +8,7 @@ import Service from "../../services/PrinterService";
 import { FaAccusoft, FaAdjust, FaEdit, FaTrash } from "react-icons/fa";
 import { Fa0 } from "react-icons/fa6";
 import useLoading from "../../hooks/useLoading";
+import { NumericFormat } from "react-number-format";
 
 export default function Printers() {
 
@@ -72,9 +73,19 @@ export default function Printers() {
                         <tr key={index}>
                             <td>{printer.printerName}</td>
                             <td>{printer.manufacturer}</td>
-                            <td>{printer.printerTime / 60}</td>
+                            
+                            <td>{printer.printerTime == null
+                            ? 0
+                            :
+                            <NumericFormat
+                            value={printer.printerTime / 60}
+                            displayType="text"
+                            decimalScale={1}
+                            />
+                            }</td>
+
                             <td>{printer.fepCount}
-                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;
                                 <Button 
                                 variant="primary"
                                 onClick={()=>{resetFep(printer.id)}}
@@ -95,7 +106,7 @@ export default function Printers() {
                                     />
                                     Edit
                                 </Button>
-
+                                &nbsp;
                                 <Button
                                     variant="danger"
                                     onClick={()=>obrisiPrinter(printer.id)}

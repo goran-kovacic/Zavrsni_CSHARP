@@ -8,9 +8,10 @@ import { IoIosAdd } from 'react-icons/io';
 import useError from "../../hooks/useError";
 import { GrValidate } from 'react-icons/gr';
 import { NumericFormat } from 'react-number-format';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaDumpsterFire, FaEdit, FaToiletPaperSlash, FaTrash, FaTrashRestore } from 'react-icons/fa';
 import { BsSticky, BsStickyFill } from 'react-icons/bs';
 import useLoading from "../../hooks/useLoading";
+import { FaDumpster, FaRegTrashCan } from 'react-icons/fa6';
 
 export default function Projects() {
 
@@ -36,6 +37,16 @@ export default function Projects() {
         const odgovor = await Service.obrisi('Project', id);
         hideLoading();
         prikaziError(odgovor.podaci);
+        if (odgovor.ok) {
+            dohvatiProjects();
+        }
+    }
+
+    async function obrisiSVE(id) {
+        showLoading();
+        const odgovor = await Service.obrisiSVE(id);
+        hideLoading();
+        prikaziError([odgovor.podaci]);
         if (odgovor.ok) {
             dohvatiProjects();
         }
@@ -82,11 +93,6 @@ export default function Projects() {
                     {projects && projects.map((project, index) => (
                         <tr key={index}>
                             <td>{project.projectName}</td>
-                            {/* <td>
-                                    {project.isCompleted == null
-                                        ? 'not defined'
-                                        : project.isCompleted ? 'Yes' : 'No'}
-                                </td> */}
                             <td className="sredina">
                                 <GrValidate
                                     size={30}
@@ -99,7 +105,7 @@ export default function Projects() {
                             <td>{project.completionDate == null ? 'Date not specified' :
                                 moment(project.completionDate).format('DD/MM/YYYY')}</td>
                             <td>{project.totalPrintCount == null ? 0 : project.totalPrintCount}</td>
-                            <td>{parseInt(project.totalPrintTime / 60)}h {project.totalPrintTime %60}min</td>
+                            <td>{parseInt(project.totalPrintTime / 60)}h {project.totalPrintTime % 60}min</td>
                             <td>{project.totalCost == null
                                 ? 0
                                 :
@@ -127,16 +133,29 @@ export default function Projects() {
                                     />
                                     Edit
                                 </Button>
+                                &nbsp;
                                 <Button
                                     onClick={() => obrisiProject(project.id)}
                                     variant='danger'
-                                    // size='sm'
+                                // size='sm'
 
                                 >
                                     <FaTrash
                                         size={25}
                                     />
                                     Delete
+                                </Button>
+                                &nbsp;
+                                <Button
+                                    onClick={() => obrisiSVE(project.id)}
+                                    variant='danger'
+                                // size='sm'
+
+                                >
+                                    <FaDumpsterFire
+                                        size={25}
+                                    />
+                                    Delete Project with Parts
                                 </Button>
                             </td>
                         </tr>

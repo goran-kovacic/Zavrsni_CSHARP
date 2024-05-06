@@ -228,4 +228,11 @@ namespace PrintApp.Models
         [Required(ErrorMessage = "{0} obavezno")]
         int? PrinterId
         );
+
+    public record UserDTO(
+        [Required(ErrorMessage = "Email obavezno")]
+        string? email,
+        [Required(ErrorMessage = "Lozinka obavezno")]
+        string? password
+        );
 }
