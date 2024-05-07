@@ -27,7 +27,7 @@ namespace PrintApp.Controllers
             if(jobs !=null && jobs.Count > 0)
             {
                 StringBuilder sb = new StringBuilder();
-                sb.Append("Cannot delete part because of foreign keys");
+                sb.Append("Cannot delete part because of foreign keys.");
                 throw new Exception(sb.ToString());
             }
         }

@@ -190,6 +190,7 @@ export default function Projects() {
                                     Delete
                                 </Button>
                                 &nbsp;
+                                <p></p>
                                 <Button
                                     onClick={() => obrisiSVE(project.id)}
                                     variant='danger'

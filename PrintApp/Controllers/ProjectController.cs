@@ -66,7 +66,7 @@ namespace PrintApp.Controllers
                     .Include(i => i.Project).Where(x => x.Project.Id == projectId).ToList();
                 if(parts == null)
                 {
-                    return BadRequest("Parts list is null");
+                    return BadRequest("Parts list is null.");
                 }
                 var mp = new MappingParts();
                 return new JsonResult(mp.MapReadList(parts));
@@ -129,7 +129,7 @@ namespace PrintApp.Controllers
             
             await _context.SaveChangesAsync();
 
-            return Ok("Obrisano");
+            return Ok("Deleted.");
         }
         /// <summary>
         /// Upload Project cover photo
@@ -143,16 +143,16 @@ namespace PrintApp.Controllers
         {
             if (id <= 0)
             {
-                return BadRequest("Šifra mora biti veća od nula (0)");
+                return BadRequest("ID must be greater than zero (0)");
             }
             if (slika.Base64 == null || slika.Base64?.Length == 0)
             {
-                return BadRequest("Slika nije postavljena");
+                return BadRequest("Picture not uploaded.");
             }
             var p = _context.Projects.Find(id);
             if (p == null)
             {
-                return BadRequest("Ne postoji project s šifrom " + id + ".");
+                return BadRequest("Project ID " + id + "not found.");
             }
             try
             {
@@ -166,7 +166,7 @@ namespace PrintApp.Controllers
                 }
                 var putanja = Path.Combine(dir + ds + id + ".png");
                 System.IO.File.WriteAllBytes(putanja, Convert.FromBase64String(slika.Base64));
-                return Ok("Uspješno pohranjena slika");
+                return Ok("Picture uploaded successfully.");
             }
             catch (Exception e)
             {

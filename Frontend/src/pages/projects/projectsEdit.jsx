@@ -72,7 +72,7 @@ export default function ProjectsEdit() {
             creationDate: podaci.get('creationDate') == "" ? null : podaci.get('creationDate'),
             completionDate: podaci.get('completionDate') == "" ? null : podaci.get('completionDate'),
             isCompleted: podaci.get('isCompleted') == 'on' ? true : false,
-            projectDescription: podaci.get('projectDescription'),
+            // projectDescription: podaci.get('projectDescription'),
             totalPrintTime: project.totalPrintTime,
             totalPrintCount: project.totalPrintCount,
             totalCost: project.totalCost,
@@ -156,13 +156,13 @@ export default function ProjectsEdit() {
                                 defaultValue={project.completionDate}
                             />
                         </Form.Group>
-                        <Form.Group controlId="projectDescription">
+                        {/* <Form.Group controlId="projectDescription">
                             <Form.Label>Project Description</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="projectDescription"
                                 defaultValue={project.projectDescription} />
-                        </Form.Group>
+                        </Form.Group> */}
                         <Form.Group controlId="isCompleted">
                             <Form.Check
                                 label="Completed"

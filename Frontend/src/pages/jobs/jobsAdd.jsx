@@ -101,7 +101,7 @@ export default function jobsAdd(){
 
                         {part && part.map((s, index) => (
                             <option key={index} value={s.id}>
-                                {s.partName}
+                                {s.project_Name} - {s.partName}
                             </option>
                         ))}
                     </Form.Select>

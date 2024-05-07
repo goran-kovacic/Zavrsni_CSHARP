@@ -37,7 +37,7 @@ namespace PrintApp.Controllers
                 .ToList();
             if (list == null || list.Count == 0)
             {
-                throw new Exception("nema podataka u bazi");
+                throw new Exception("No database records found.");
             }
             return _mapper.MapReadList(list);
         }
@@ -47,7 +47,7 @@ namespace PrintApp.Controllers
             return _context.Printers
                 .Include(p => p.JobsInPrinter)
                 .FirstOrDefault(x => x.Id == id)
-                ?? throw new Exception("ne postoji printer sa sifrom " + id + " u bazi");
+                ?? throw new Exception("Printer ID " + id + " not found.");
         }
 
         protected override Printer KreirajEntitet(PrinterDTOInsertUpdate dto)
@@ -69,7 +69,7 @@ namespace PrintApp.Controllers
 
             if (entitet == null)
             {
-                return BadRequest("Ne postoji printer sa sifrom " + id + " u bazi");
+                return BadRequest("Printer ID " + id + " not found.");
             }
             entitet.FepCount = 0;
 

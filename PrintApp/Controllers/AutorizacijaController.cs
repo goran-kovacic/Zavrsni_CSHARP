@@ -43,14 +43,14 @@ namespace PrintApp.Controllers
             {
                 // Šaljem Status403Forbidden jer frontend hvata sve 401 i baca na login pa nikada ne dobijem poruku da
                 // nije dobro korisničko ime ili lozinka
-                return StatusCode(StatusCodes.Status403Forbidden, "Niste autorizirani, ne mogu naći operatera");
+                return StatusCode(StatusCodes.Status403Forbidden, "Invalid user/password.");
             }
 
 
 
             if (!BCrypt.Net.BCrypt.Verify(operater.password, operBaza.UserPassword))
             {
-                return StatusCode(StatusCodes.Status403Forbidden, "Niste autorizirani, lozinka ne odgovara");
+                return StatusCode(StatusCodes.Status403Forbidden, "Invalid user/password.");
             }
 
 

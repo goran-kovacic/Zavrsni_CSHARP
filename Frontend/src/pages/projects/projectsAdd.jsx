@@ -57,7 +57,7 @@ export default function ProjectsAdd() {
             projectName: podaci.get('projectName'),
             creationDate: creationDate,
             completionDate: completionDate,
-            projectDescription: podaci.get('projectDescription'),
+            // projectDescription: podaci.get('projectDescription'),
             isCompleted: podaci.get('isCompleted') == 'on' ? true : false
         });
     }
@@ -93,32 +93,10 @@ export default function ProjectsAdd() {
                     />
                 </FormGroup>
 
-                {/* <label>Creation Date:</label>
-
-                <ReactDatePicker                    
-                    controlId="creationDate"
-                    name="creationDate"
-                    showIcon
-                    todayButton="Today"
-                    dateFormat="dd/MM/yyyy"
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                /> */}
-
-                {/* <label>Completion Date:</label>
-
-                <ReactDatePicker
-                    showIcon
-                    todayButton="Today"
-                    dateFormat="dd/MM/yyyy"
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                />  */}
-
-                <Form.Group controlId="projectDescription">
+                {/* <Form.Group controlId="projectDescription">
                     <Form.Label>Project Description</Form.Label>
                     <Form.Control type="text" name="projectDescription" />
-                </Form.Group>
+                </Form.Group> */}
 
                 <Form.Group controlId="isCompleted">
                     <Form.Check label="Completed" name="isCompleted" />

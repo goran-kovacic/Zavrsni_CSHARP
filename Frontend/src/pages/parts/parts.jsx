@@ -109,7 +109,7 @@ export default function parts() {
                         <th>Print Count</th>
                         <th>Print Time</th>
                         <th>Cost (€)</th>
-                        <th>Edit/Delete</th>
+                        <th>Edit/Delete/Download/Upload</th>
                     </tr>
                 </thead>
                 <tbody>

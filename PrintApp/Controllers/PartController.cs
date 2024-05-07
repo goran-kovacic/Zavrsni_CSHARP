@@ -40,7 +40,7 @@ namespace PrintApp.Controllers
                 .ToList();
             if(list == null || list.Count == 0)
             {
-                throw new Exception("nema podataka u bazi");
+                throw new Exception("No database records found.");
             }
             return _mapper.MapReadList(list);
         }
@@ -52,13 +52,13 @@ namespace PrintApp.Controllers
                 .Include(p => p.JobsInPart)
                 //.Include(p => p.FilesInPart)
                 .FirstOrDefault(x => x.Id == id)
-                ?? throw new Exception("ne postoji part sa sifrom " + id + " u bazi");
+                ?? throw new Exception("Part ID " + id + " not found.");
         }
 
         protected override Part PromjeniEntitet(PartDTOInsertUpdate dto, Part entity)
         {
             var project = _context.Projects.Find(dto.IdProject)
-                ?? throw new Exception("Ne postoji project sa šifrom " + dto.IdProject + " u bazi");
+                ?? throw new Exception("Project ID " + dto.IdProject + " not found.");
 
             entity.PartName = dto.PartName;
             entity.Project = project;
@@ -111,7 +111,7 @@ namespace PrintApp.Controllers
                     //.Include(i => i.Material).Where(x => x.Material.Id == partId).ToList();
                 if (jobs == null)
                 {
-                    return BadRequest("Parts list is null");
+                    return BadRequest("Parts list is null.");
                 }
                 var mp = new MappingJobs();
                 return new JsonResult(mp.MapReadList(jobs));
@@ -133,14 +133,14 @@ namespace PrintApp.Controllers
         {
             if (datoteka == null)
             {
-                return BadRequest("Datoteka nije postavljena");
+                return BadRequest("File not specified.");
             }
 
             var entitetIzbaze = _context.Parts.Find(partId);
 
             if (entitetIzbaze == null)
             {
-                return BadRequest("Ne postoji part sa šifrom " + partId + " u bazi");
+                return BadRequest("Part ID " + partId + " not found.");
             }
             try
             {
@@ -154,7 +154,7 @@ namespace PrintApp.Controllers
                 var putanja = Path.Combine(dir + ds + partId + "_" + System.IO.Path.GetExtension(datoteka.FileName));
                 Stream fileStream = new FileStream(putanja, FileMode.Create);
                 await datoteka.CopyToAsync(fileStream);
-                return Ok("Datoteka pohranjena");
+                return Ok("File uploaded.");
             }
             catch (Exception e)
             {

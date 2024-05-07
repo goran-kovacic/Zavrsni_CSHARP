@@ -36,11 +36,11 @@ namespace PrintApp.Controllers
         protected override PrintJob KreirajEntitet(JobDTOInsertUpdate dto)
         {
             var printer = _context.Printers.Find(dto.PrinterId)
-                ?? throw new Exception("Ne postoji printer sa šifrom " + dto.PrinterId + " u bazi");
+                ?? throw new Exception("Printer ID " + dto.PrinterId + " not found.");
             var material = _context.Materials.Find(dto.MaterialId)
-                ?? throw new Exception("Ne postoji resin sa šifrom " + dto.MaterialId + " u bazi");
+                ?? throw new Exception("Resin ID " + dto.MaterialId + " not found.");
             var part = _context.Parts.Include(p => p.Project).FirstOrDefault(p => p.Id == dto.PartId)
-                ?? throw new Exception("Ne postoji part sa šifrom " + dto.PartId + " u bazi");
+                ?? throw new Exception("Part ID " + dto.PartId + " not found.");
 
 
 
@@ -81,7 +81,7 @@ namespace PrintApp.Controllers
                 .ToList();
             if(list == null || list.Count == 0)
             {
-                throw new Exception("nema podataka u bazi");
+                throw new Exception("No database records found.");
             }
             return _mapper.MapReadList(list);
         }
@@ -93,17 +93,17 @@ namespace PrintApp.Controllers
                 .Include(p => p.Material)
                 .Include(p => p.Printer)
                 .FirstOrDefault(x => x.Id == id)
-                ?? throw new Exception("ne postoji job sa sifrom " + id + " u bazi");
+                ?? throw new Exception("Job ID " + id + " not found.");
         }
 
         protected override PrintJob PromjeniEntitet(JobDTOInsertUpdate dto, PrintJob entity)
         {
             var part = _context.Parts.Find(dto.PartId)
-                ?? throw new Exception("Ne postoji part sa šifrom " + dto.PartId + " u bazi");
+                ?? throw new Exception("Part ID " + dto.PartId + " not found.");
             var material = _context.Materials.Find(dto.MaterialId)
-                ?? throw new Exception("Ne postoji material sa šifrom " + dto.MaterialId + " u bazi");
+                ?? throw new Exception("Resin ID " + dto.MaterialId + " not found.");
             var printer = _context.Printers.Find(dto.PrinterId)
-                ?? throw new Exception("Ne postoji printer sa šifrom " + dto.PrinterId + " u bazi");
+                ?? throw new Exception("Printer ID " + dto.PrinterId + " not found.");
 
             //entity.Result = dto.Result;
             entity.Volume = dto.Volume;

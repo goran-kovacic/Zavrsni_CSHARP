@@ -144,7 +144,7 @@ export default function jobs(){
                 }}>
                     {parts.map((part, index)=>(
                         <option key={index} value={part.id}>
-                            {part.partName}
+                        {part.project_Name} - {part.partName}
                         </option>
                     ))}
                 </Form.Select>

@@ -165,7 +165,7 @@ namespace PrintApp.Controllers
             var entitetIzbaze = DbSet?.Find(id);
             if (entitetIzbaze == null)
             {
-                throw new Exception("Ne postoji entitet s šifrom " + id + " u bazi");
+                throw new Exception("Entity ID " + id + " not found.");
             }
 
             return entitetIzbaze;
@@ -177,7 +177,7 @@ namespace PrintApp.Controllers
             var lista = DbSet?.ToList();
             if (lista == null || lista.Count == 0)
             {
-                throw new Exception("Ne postoje podaci u bazi");
+                throw new Exception("No database records found.");
             }
             return _mapper.MapReadList(lista);
         }
