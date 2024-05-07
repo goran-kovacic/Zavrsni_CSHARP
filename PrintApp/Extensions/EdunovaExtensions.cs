@@ -15,14 +15,14 @@ namespace PrintApp.Extensions
               // čitati https://devintxcontent.blob.core.windows.net/showcontent/Speaker%20Presentations%20Fall%202017/Web%20API%20Best%20Practices.pdf
                 var o = new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
-                    Title = "Edunova API",
+                    Title = "Print Log App API",
                     Version = "v1",
                     Contact = new Microsoft.OpenApi.Models.OpenApiContact()
                     {
-                        Email = "tjakopec@gmail.com",
-                        Name = "Tomislav Jakopec"
+                        Email = "kovacic.go@gmail.com",
+                        Name = "Goran Kovačić"
                     },
-                    Description = "Ovo je dokumentacija za Edunova API",
+                    Description = "Ovo je dokumentacija za API",
                     License = new Microsoft.OpenApi.Models.OpenApiLicense()
                     {
                         Name = "Edukacijska licenca"
@@ -67,7 +67,7 @@ namespace PrintApp.Extensions
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                //sgo.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+                sgo.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
 
             });
 

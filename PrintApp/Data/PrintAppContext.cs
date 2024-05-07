@@ -22,7 +22,7 @@ namespace PrintApp.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Part>().HasOne(p => p.Project);
-            modelBuilder.Entity<PrintFile>().HasOne(p => p.Part);
+            //modelBuilder.Entity<PrintFile>().HasOne(p => p.Part);
             modelBuilder.Entity<PrintJob>().HasOne(p => p.Part);
             modelBuilder.Entity<PrintJob>().HasOne(p => p.Printer);
             modelBuilder.Entity<PrintJob>().HasOne(p => p.Material);

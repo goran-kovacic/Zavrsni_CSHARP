@@ -8,17 +8,27 @@ using System.Text;
 
 namespace PrintApp.Controllers
 {
+    /// <summary>
+    /// Kontroler za rute na entitetu Project
+    /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
     public class ProjectController : AppController<Project, ProjectDTORead, ProjectDTOInsertUpdate>
     {
-
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="context">Kontekst baze podataka</param>
         public ProjectController(PrintAppContext context) : base(context) 
         {
             DbSet = _context.Projects;
             _mapper = new MappingProjects();
         }
-
+        /// <summary>
+        /// Project se ne može brisati ako je vanjski ključ na Partu
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <exception cref="Exception"></exception>
         protected override void ControlDelete(Project entity)
         {
             var parts = _context.Parts
@@ -37,7 +47,11 @@ namespace PrintApp.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Dohvaćanje liste svih Partova vezanih za {projectId}
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Part/{projectId:int}")]
         public IActionResult GetParts(int projectId)
@@ -62,7 +76,11 @@ namespace PrintApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Kontrola kreiranje novog entiteta Project
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         protected override Project KreirajEntitet(ProjectDTOInsertUpdate dto)
         {
             var entity = _mapper.MapInsertUpdatedFromDTO(dto);
@@ -82,7 +100,11 @@ namespace PrintApp.Controllers
 
             return entity;
         }
-
+        /// <summary>
+        /// Brisanje Projecta te svih Partova i Jobova vezanih vanjskim ključevima
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("RemoveProjectPartJob/{id:int}")]
         public async Task<IActionResult> DeleteProject(int id)
         {
@@ -109,7 +131,12 @@ namespace PrintApp.Controllers
 
             return Ok("Obrisano");
         }
-
+        /// <summary>
+        /// Upload Project cover photo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="slika"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("postaviSliku/{id:int}")]
         public IActionResult PostaviSliku(int id, SlikaDTO slika)

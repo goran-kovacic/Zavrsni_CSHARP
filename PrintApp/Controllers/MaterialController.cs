@@ -6,6 +6,9 @@ using System.Text;
 
 namespace PrintApp.Controllers
 {
+    /// <summary>
+    /// Kontroler za rute na entitetu Material
+    /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
     public class MaterialController:AppController<Material, MaterialDTORead, MaterialDTOInsertUpdate>

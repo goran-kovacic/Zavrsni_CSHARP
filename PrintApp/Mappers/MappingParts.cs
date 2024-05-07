@@ -18,7 +18,7 @@ namespace PrintApp.Mappers
                     entity.PrintTime,
                     entity.PrintCount == null ? 0 : entity.PrintCount.Value,
                     entity.Project == null ? "" : entity.Project.ProjectName,
-                    entity.FilesInPart == null ? 0 : entity.FilesInPart.Count,
+                    //entity.FilesInPart == null ? 0 : entity.FilesInPart.Count,
                     entity.JobsInPart == null ? 0 : entity.JobsInPart.Count,
                     PutanjaDatoteke(entity)
                     ));

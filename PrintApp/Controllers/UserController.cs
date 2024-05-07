@@ -4,6 +4,9 @@ using PrintApp.Models;
 
 namespace PrintApp.Controllers
 {
+    /// <summary>
+    /// Kontroler za entitet User
+    /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
     public class UserController : AppController<User, UserDTORead, UserDTOInsertUpdate>

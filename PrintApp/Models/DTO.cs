@@ -17,8 +17,6 @@ namespace PrintApp.Models
         string? slika
         );
 
-
-
     public class ProjectDTOInsertUpdate : IValidatableObject
     {
         public ProjectDTOInsertUpdate(string projectName, string? projectDescription, DateTime? creationDate, DateTime? completionDate, bool? isCompleted, int? totalPrintTime, int? totalPrintCount, decimal? totalCost, string slika)
@@ -34,9 +32,9 @@ namespace PrintApp.Models
             Slika = slika;
         }
 
-        [Required(ErrorMessage = "{0} required")]
+        [Required(ErrorMessage = "{0} required!")]
         public string ProjectName { get; set; }
-        [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
+        [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters!")]
         public string? ProjectDescription { get; set; }
         [DataType(DataType.Date)]
         public DateTime? CreationDate { get; set; }
@@ -53,7 +51,7 @@ namespace PrintApp.Models
 
             if (CreationDate == null && CompletionDate != null)
             {
-                yield return new ValidationResult("cannot enter completion date without creation date");
+                yield return new ValidationResult("Cannot enter completion date without creation date!");
             }
             else if (CreationDate == null || CompletionDate == null)
             {
@@ -61,15 +59,10 @@ namespace PrintApp.Models
             }
             else if (CompletionDate.Value < CreationDate.Value)
             {
-                yield return new ValidationResult("end date must be greater than start date");
+                yield return new ValidationResult("End date must be greater than start date!");
             }
-
-
         }
     }
-
-
-
 
     //public record ProjectDTOInsertUpdate(
     //    [Required(ErrorMessage ="{0} required")]
@@ -95,10 +88,10 @@ namespace PrintApp.Models
         );
 
     public record UserDTOInsertUpdate(
-        [Required(ErrorMessage ="{0} required")]
-        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
+        [Required(ErrorMessage ="{0} required!")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters!")]
         string UserName,
-        [Required(ErrorMessage ="{0} required")]
+        [Required(ErrorMessage ="{0} required!")]
         string UserPassword
         );
 
@@ -109,14 +102,14 @@ namespace PrintApp.Models
         int? PrintTime,
         int? PrintCount,
         string? Project_Name,
-        int FilesNumber,
+        //int FilesNumber,
         int JobsNumber,
         string? datoteka
         );
 
     public record PartDTOInsertUpdate(
-        [Required(ErrorMessage ="{0} required")]
-        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
+        [Required(ErrorMessage ="{0} required!")]
+        [MaxLength(50, ErrorMessage = "{0} cannot exceed {1} characters!")]
         string PartName,
         int? IdProject,
         int? PrintCount,
@@ -124,25 +117,25 @@ namespace PrintApp.Models
         decimal? Cost
         );
 
-    public record FileDTORead(
-        int Id,
-        string? FileComment,
-        string? FilePath,
-        string? FileType,
-        int? FileVersion,
-        string? Part_Name
-        );
+    //public record FileDTORead(
+    //    int Id,
+    //    string? FileComment,
+    //    string? FilePath,
+    //    string? FileType,
+    //    int? FileVersion,
+    //    string? Part_Name
+    //    );
 
-    public record FileDTOInsertUpdate(
-        [Required(ErrorMessage ="{0} required")]
-        string? FilePath,
-        [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
-        string? FileComment,
-        string? FileType,
-        int? FileVersion,
-        [Required(ErrorMessage ="{0} required")]
-        int? PartId
-        );
+    //public record FileDTOInsertUpdate(
+    //    [Required(ErrorMessage ="{0} required")]
+    //    string? FilePath,
+    //    [MaxLength(200, ErrorMessage = "{0} cannot exceed {1} characters")]
+    //    string? FileComment,
+    //    string? FileType,
+    //    int? FileVersion,
+    //    [Required(ErrorMessage ="{0} required")]
+    //    int? PartId
+    //    );
 
     public record PrinterDTORead(
         int Id,
@@ -154,11 +147,11 @@ namespace PrintApp.Models
         );
 
     public record PrinterDTOInsertUpdate(
-        [Required(ErrorMessage ="{0} required")]
-        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
+        [Required(ErrorMessage ="{0} required!")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters!")]
         string? PrinterName,
-        [Required(ErrorMessage ="{0} required")]
-        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
+        [Required(ErrorMessage ="{0} required!")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters!")]
         string? Manufacturer,  
         int? PrinterTime,
         int? FepCount
@@ -183,44 +176,44 @@ namespace PrintApp.Models
         );
 
     public record MaterialDTOInsertUpdate(
-        [Required(ErrorMessage ="{0} required")]
-        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
+        [Required(ErrorMessage ="{0} required!")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters!")]
         string Manufacturer,
-        [Required(ErrorMessage ="{0} required")]
-        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters")]
+        [Required(ErrorMessage ="{0} required!")]
+        [MaxLength(20, ErrorMessage = "{0} cannot exceed {1} characters!")]
         string MaterialName,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 50, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 50, ErrorMessage = "{0} must be between {1} and {2}!")]
         int LiftDistance,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 50, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 50, ErrorMessage = "{0} must be between {1} and {2}!")]
         int BottomLiftDistance,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 100, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 100, ErrorMessage = "{0} must be between {1} and {2}!")]
         decimal BottomExposure,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 20, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 20, ErrorMessage = "{0} must be between {1} and {2}!")]
         decimal BottomLiftSpeed,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 20, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 20, ErrorMessage = "{0} must be between {1} and {2}!")]
         decimal BottomRetractSpeed,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 50, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 50, ErrorMessage = "{0} must be between {1} and {2}!")]
         decimal CalibratedExposure,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 1000, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 1000, ErrorMessage = "{0} must be between {1} and {2}!")]
         decimal CostPerUnit,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 200, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 200, ErrorMessage = "{0} must be between {1} and {2}!")]
         decimal LayerHeight,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 20, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 20, ErrorMessage = "{0} must be betweenu {1} and {2}!")]
         decimal LiftSpeed,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 100, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 100, ErrorMessage = "{0} must be between {1} and {2}!")]
         decimal? LightOffDelay,
-        [Required(ErrorMessage ="{0} required")]
-        [Range(0, 20, ErrorMessage = "{0} mora biti između {1} i {2}")]
+        [Required(ErrorMessage ="{0} required!")]
+        [Range(0, 20, ErrorMessage = "{0} must be between {1} and {2}!")]
         decimal RetractSpeed
 
         );
@@ -237,24 +230,24 @@ namespace PrintApp.Models
         );
 
     public record JobDTOInsertUpdate(
-        [Required(ErrorMessage = "{0} obavezno")]
+        [Required(ErrorMessage = "{0} required!")]
         int? PrintTime,
         //bool? Result,
-        [Range(1, 1000, ErrorMessage = "{0} mora biti između {1} i {2}")]
-        [Required(ErrorMessage = "{0} obavezno")]
+        [Range(1, 1000, ErrorMessage = "{0} must be between {1} and {2}")]
+        [Required(ErrorMessage = "{0} required!")]
         decimal? Volume,
-        [Required(ErrorMessage = "{0} obavezno")]
+        [Required(ErrorMessage = "{0} required!")]
         int? MaterialId,
-        [Required(ErrorMessage = "{0} obavezno")]
+        [Required(ErrorMessage = "{0} required!")]
         int? PartId,
-        [Required(ErrorMessage = "{0} obavezno")]
+        [Required(ErrorMessage = "{0} required!")]
         int? PrinterId
         );
 
     public record UserDTO(
-        [Required(ErrorMessage = "Email obavezno")]
+        [Required(ErrorMessage = "Email required!")]
         string? email,
-        [Required(ErrorMessage = "Lozinka obavezno")]
+        [Required(ErrorMessage = "Password required!")]
         string? password
         );
 

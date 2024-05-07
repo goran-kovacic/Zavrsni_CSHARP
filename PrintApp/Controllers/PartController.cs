@@ -7,6 +7,9 @@ using System.Text;
 
 namespace PrintApp.Controllers
 {
+    /// <summary>
+    /// Kontroler za rute na entitetu Part
+    /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
     public class PartController: AppController<Part, PartDTORead, PartDTOInsertUpdate>
@@ -20,8 +23,7 @@ namespace PrintApp.Controllers
         protected override void ControlDelete(Part entity)
         {
             if (entity != null
-                && (entity.FilesInPart != null && entity.FilesInPart.Count() > 0)
-                || (entity.JobsInPart !=null && entity.JobsInPart.Count() > 0))
+                && (entity.JobsInPart !=null && entity.JobsInPart.Count() > 0))
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append("Cannot delete part because of foreign keys");
@@ -34,7 +36,7 @@ namespace PrintApp.Controllers
             var list = _context.Parts
                 .Include(p => p.Project)
                 .Include(p => p.JobsInPart)
-                .Include(p => p.FilesInPart)
+                //.Include(p => p.FilesInPart)
                 .ToList();
             if(list == null || list.Count == 0)
             {
@@ -48,7 +50,7 @@ namespace PrintApp.Controllers
             return _context.Parts
                 .Include(p => p.Project)
                 .Include(p => p.JobsInPart)
-                .Include(p => p.FilesInPart)
+                //.Include(p => p.FilesInPart)
                 .FirstOrDefault(x => x.Id == id)
                 ?? throw new Exception("ne postoji part sa sifrom " + id + " u bazi");
         }
@@ -74,7 +76,7 @@ namespace PrintApp.Controllers
             var entity = _mapper.MapInsertUpdatedFromDTO(dto);
 
             entity.Project = project;
-            entity.FilesInPart = new List<PrintFile>();
+            //entity.FilesInPart = new List<PrintFile>();
             entity.JobsInPart = new List<PrintJob>();
 
             if (entity.Cost == null) { entity.Cost = 0; }
@@ -83,7 +85,11 @@ namespace PrintApp.Controllers
 
             return entity;
         }
-
+        /// <summary>
+        /// Dohvaća sve entitete Job vezane za Part
+        /// </summary>
+        /// <param name="partId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Job/{partId:int}")]
         public IActionResult GetJobs(int partId)
@@ -115,7 +121,12 @@ namespace PrintApp.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Upload datoteka koje predstavljaju Part
+        /// </summary>
+        /// <param name="partId"></param>
+        /// <param name="datoteka"></param>
+        /// <returns></returns>
         [HttpPatch]
         [Route("{partId:int}")]
         public async Task<ActionResult> Patch(int partId, IFormFile datoteka)

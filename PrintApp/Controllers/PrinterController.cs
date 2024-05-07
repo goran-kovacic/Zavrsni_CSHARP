@@ -7,6 +7,9 @@ using System.Text;
 
 namespace PrintApp.Controllers
 {
+    /// <summary>
+    /// Kontroler za rute na entitetu Printer
+    /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
     public class PrinterController : AppController<Printer, PrinterDTORead, PrinterDTOInsertUpdate>
@@ -53,7 +56,11 @@ namespace PrintApp.Controllers
             entitet.JobsInPrinter = new List<PrintJob>();
             return entitet;
         }
-
+        /// <summary>
+        /// Resetiranje atributa FepCount na 0
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPatch]
         [Route("ResetFEP/{id:int}")]
         public async Task<ActionResult> ResetFep(int id)

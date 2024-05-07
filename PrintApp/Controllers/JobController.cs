@@ -6,10 +6,17 @@ using PrintApp.Models;
 
 namespace PrintApp.Controllers
 {
+    /// <summary>
+    /// Kontroler za rute na entitetu Job
+    /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
     public class JobController:AppController<PrintJob, JobDTORead, JobDTOInsertUpdate>
     {
+        /// <summary>
+        /// Konstruktor, context i mapper
+        /// </summary>
+        /// <param name="context"></param>
         public JobController(PrintAppContext context) : base(context) 
         {
             DbSet = _context.PrintJobs;
@@ -20,7 +27,12 @@ namespace PrintApp.Controllers
         {
            
         }
-
+        /// <summary>
+        /// Kreiranje novog entiteta te ažuriranje atributa u vezanim tablicama
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         protected override PrintJob KreirajEntitet(JobDTOInsertUpdate dto)
         {
             var printer = _context.Printers.Find(dto.PrinterId)

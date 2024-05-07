@@ -7,6 +7,9 @@ using System.Text;
 
 namespace PrintApp.Controllers
 {
+    /// <summary>
+    /// Autentifikacija korisnika za pristup svim ostalim rutama
+    /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
     public class AutorizacijaController : ControllerBase
@@ -17,7 +20,11 @@ namespace PrintApp.Controllers
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Generiranje tokena
+        /// </summary>
+        /// <param name="operater"></param>
+        /// <returns></returns>
         [HttpPost("token")]
         public IActionResult GenerirajToken(UserDTO operater)
         {
